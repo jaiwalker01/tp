@@ -40,15 +40,15 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data
 
-### Jean Doe
+### Lin Muxi
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/mxxxx23.png" width="200px">
 
-[[github](http://github.com/anir2212)]
+[[github](http://github.com/mxxxx23)]
 [[portfolio](team/johndoe.md)]
 
-* Role: Developer
-* Responsibilities: Dev Ops + Threading
+* Role: Documentation
+* Responsibilities: Responsible for the quality of various project documents.
 
 ### Anirudh
 
@@ -58,3 +58,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 * Role: Developer
 * Responsibilities: UI
+q
