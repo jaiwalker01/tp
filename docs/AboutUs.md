@@ -17,9 +17,10 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 
 [[github](https://github.com/print-shanice)]
-[[portfolio](team/johndoe.md)]
 
-* Role: Project Advisor
+
+* Role: Scheduling and tracking
+* Responsibilities: In charge of defining, assigning, and tracking project tasks.
 
 ### Jai
 
