@@ -60,8 +60,9 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        String deleteCommand = "delete Nonexistent Employee";
+        assertCommandException(deleteCommand, String.format(
+            seedu.address.logic.commands.DeleteCommand.MESSAGE_EMPLOYEE_NOT_FOUND, "Nonexistent Employee"));
     }
 
     @Test
