@@ -18,6 +18,10 @@ public class TaskListStorage {
         this.tasks = tasks;
     }
 
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
 
 
 

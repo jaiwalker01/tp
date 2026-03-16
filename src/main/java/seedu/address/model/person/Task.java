@@ -25,5 +25,10 @@ public class Task {
         return taskDescription;
     }
 
+    @Override
+    public String toString() {
+        return taskName + ": " + taskDescription;
+    }
+
 
 }
