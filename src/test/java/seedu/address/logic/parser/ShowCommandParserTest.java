@@ -1,7 +1,7 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +30,7 @@ public class ShowCommandParserTest {
     }
 
     @Test
-    public void parse_invalidInput_noPrefix_returnsEmptyFilter() throws Exception {
+    public void parse_invalidInputWithNoPrefix_returnsEmptyFilter() throws Exception {
         ShowCommand command = parser.parse("Alice");
         assertNotNull(command);
     }

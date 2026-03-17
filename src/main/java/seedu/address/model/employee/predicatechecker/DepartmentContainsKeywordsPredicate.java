@@ -27,7 +27,7 @@ public class DepartmentContainsKeywordsPredicate implements Predicate<Employee> 
 
     @Override
     public boolean equals(Object other) {
-        return other == this
+        return (other == this)
                 || (other instanceof DepartmentContainsKeywordsPredicate
                 && keywords.equals(((DepartmentContainsKeywordsPredicate) other).keywords));
     }
