@@ -41,11 +41,11 @@ public class ShowCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof ShowCommand)) {
             return false;
         }
 
-        FindCommand otherShowCommand = (FindCommand) other;
+        ShowCommand otherShowCommand = (ShowCommand) other;
         return predicate.equals(otherShowCommand.predicate);
     }
 
