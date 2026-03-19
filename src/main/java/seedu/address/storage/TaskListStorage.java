@@ -41,4 +41,19 @@ public class TaskListStorage {
     public void addTask(Task modelType) {
         tasks.add(modelType);
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof TaskListStorage)) {
+            return false;
+        }
+
+        TaskListStorage otherTaskListStorage = (TaskListStorage) other;
+        return tasks.equals(otherTaskListStorage.getTasks());
+    }
 }
