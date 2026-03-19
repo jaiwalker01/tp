@@ -13,18 +13,17 @@ public class AddTaskCommand extends Command {
     public static final String COMMAND_WORD = "addtask";
 
     public static final String MESSAGE_USAGE =
-            "Example: " + COMMAND_WORD
+                    COMMAND_WORD
                     + ": Adds a task to the task list. "
-                    + "Parameters:\n"
-                    + COMMAND_WORD + PREFIX_TASK_NAME + "Finish Homework "
-                    + PREFIX_TASK_DESCRIPTION + "Complete math and science homework by tomorrow"
+                    + "Example:\n"
+                    + COMMAND_WORD + " " + PREFIX_TASK_NAME + "Finish Homework "
+                    + PREFIX_TASK_DESCRIPTION + "Complete math and science homework by tomorrow "
                     + PREFIX_NAME + "John Doe";
 
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
 
     private final Task task;
     private final String personName;
-
 
 
     public AddTaskCommand(Task task, String personName) {
