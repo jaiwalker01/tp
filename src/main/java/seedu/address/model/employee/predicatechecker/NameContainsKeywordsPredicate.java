@@ -1,10 +1,10 @@
-package seedu.address.model.employee;
+package seedu.address.model.employee.predicatechecker;
 
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.employee.Employee;
 
 /**
  * Tests that a {@code Employee}'s {@code Name} matches any of the keywords given.
@@ -17,9 +17,11 @@ public class NameContainsKeywordsPredicate implements Predicate<Employee> {
     }
 
     @Override
-    public boolean test(Employee person) {
+    public boolean test(Employee employee) {
         return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
+                .anyMatch(keyword -> employee.getName().fullName
+                        .toLowerCase()
+                        .contains(keyword.toLowerCase()));
     }
 
     @Override
@@ -42,3 +44,4 @@ public class NameContainsKeywordsPredicate implements Predicate<Employee> {
         return new ToStringBuilder(this).add("keywords", keywords).toString();
     }
 }
+
