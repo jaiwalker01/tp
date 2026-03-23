@@ -143,6 +143,8 @@ Shows employees that match one or more field-based filters.
 Format: `show [n/NAME_KEYWORD] [d/DEPARTMENT_KEYWORD] [p/PHONE_KEYWORD] [e/EMAIL_KEYWORD] [pos/POSITION_KEYWORD]`
 
 * You must provide at least one filter.
+* Filters can be written in any order.
+* You may use any combination of supported filters in a single command.
 * Multiple filters are combined together, so only employees matching all provided filters are shown.
 * Each filter matches by case-insensitive keyword containment.
 * Each prefix currently accepts a single keyword token. For example, use `show pos/Engineer` instead of `show pos/Software Engineer`.
@@ -150,6 +152,8 @@ Format: `show [n/NAME_KEYWORD] [d/DEPARTMENT_KEYWORD] [p/PHONE_KEYWORD] [e/EMAIL
 Examples:
 * `show d/IT` shows employees in the IT department.
 * `show n/Alex pos/Manager` shows employees whose name matches `Alex` and whose position matches `Manager`.
+* `show pos/Manager d/HR` shows employees who are managers in the HR department.
+* `show n/Al` shows employees whose names contain `Al`, such as `Alex` and `Sally`.
 
 <a id="editing-an-employee"></a>
 ### Editing an employee : `edit`
