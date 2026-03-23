@@ -14,6 +14,7 @@ import seedu.address.model.employee.predicatechecker.EmailContainsKeywordsPredic
 import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.PhoneContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.PositionContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates
@@ -88,6 +89,17 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             if (!value.isEmpty()) {
                 predicate = predicate.and(
                         new EmailContainsKeywordsPredicate(Arrays.asList(value.split("\\s+")))
+                );
+                hasFilter = true;
+            }
+        }
+
+        // Tag
+        if (input.contains("t/")) {
+            String value = extract(input, "t/");
+            if (!value.isEmpty()) {
+                predicate = predicate.and(
+                        new TagContainsKeywordsPredicate(Arrays.asList(value.split("\\s+")))
                 );
                 hasFilter = true;
             }
