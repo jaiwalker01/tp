@@ -14,6 +14,7 @@ import seedu.address.model.employee.predicatechecker.EmailContainsKeywordsPredic
 import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.PhoneContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.PositionContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.TagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates
@@ -93,6 +94,17 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             }
         }
 
+        // Tag
+        if (input.contains("t/")) {
+            String value = extract(input, "t/");
+            if (!value.isEmpty()) {
+                predicate = predicate.and(
+                        new TagContainsKeywordsPredicate(Arrays.asList(value.split("\\s+")))
+                );
+                hasFilter = true;
+            }
+        }
+
         // If no valid filters → show nothing
         if (!hasFilter) {
             predicate = employee -> false;
@@ -102,7 +114,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
     }
 
     /**
-     * Extracts value after a prefix (e.g. n/, d/, e/) until next space or end.
+     * Extracts value after a prefix until the next recognised prefix or end of input.
      */
     private String extract(String input, String prefix) {
         int start = input.indexOf(prefix);
@@ -111,10 +123,19 @@ public class ShowCommandParser implements Parser<ShowCommand> {
         }
 
         start += prefix.length();
+        int end = input.length();
 
-        int end = input.indexOf(" ", start);
-        if (end == -1) {
-            return input.substring(start).trim();
+        String[] prefixes = {"n/", "d/", "p/", "e/", "pos/", "t/"};
+
+        for (String nextPrefix : prefixes) {
+            if (nextPrefix.equals(prefix)) {
+                continue;
+            }
+
+            int index = input.indexOf(" " + nextPrefix, start);
+            if (index != -1 && index < end) {
+                end = index;
+            }
         }
 
         return input.substring(start, end).trim();

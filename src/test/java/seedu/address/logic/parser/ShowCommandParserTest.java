@@ -1,206 +1,231 @@
 package seedu.address.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import java.util.Arrays;
+import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.commands.ShowCommand;
+import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.predicatechecker.DepartmentContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.EmailContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.PhoneContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.PositionContainsKeywordsPredicate;
+import seedu.address.model.employee.predicatechecker.TagContainsKeywordsPredicate;
 
 public class ShowCommandParserTest {
 
-    private ShowCommandParser parser = new ShowCommandParser();
+    private final ShowCommandParser parser = new ShowCommandParser();
 
     @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertThrows(Exception.class, () ->
-                parser.parse("     "));
+    public void parse_emptyArg_failure() {
+        assertParseFailure(parser, "   ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ShowCommand.MESSAGE_USAGE));
     }
 
     @Test
-    public void parse_validNamePrefix_returnsShowCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice");
-        assertNotNull(command);
+    public void parse_namePrefix_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alice"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alice", expectedCommand);
     }
 
     @Test
-    public void parse_multipleFields_returnsShowCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice d/IT e/gmail");
-        assertNotNull(command);
+    public void parse_departmentPrefix_success() {
+        Predicate<Employee> predicate =
+                new DepartmentContainsKeywordsPredicate(Arrays.asList("Finance"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "d/Finance", expectedCommand);
     }
 
     @Test
-    public void parse_invalidInputWithNoPrefix_returnsEmptyFilter() throws Exception {
-        ShowCommand command = parser.parse("Alice");
-        assertNotNull(command);
+    public void parse_phonePrefix_success() {
+        Predicate<Employee> predicate =
+                new PhoneContainsKeywordsPredicate(Arrays.asList("9123"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "p/9123", expectedCommand);
     }
 
     @Test
-    public void parse_onlySpacesAfterPrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/   ");
-        assertNotNull(command);
+    public void parse_emailPrefix_success() {
+        Predicate<Employee> predicate =
+                new EmailContainsKeywordsPredicate(Arrays.asList("gmail"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "e/gmail", expectedCommand);
     }
 
     @Test
-    public void parse_caseInsensitivePrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/alice");
-        assertNotNull(command);
+    public void parse_positionPrefix_success() {
+        Predicate<Employee> predicate =
+                new PositionContainsKeywordsPredicate(Arrays.asList("Manager"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "pos/Manager", expectedCommand);
     }
 
     @Test
-    public void parse_phonePrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("p/9123");
-        assertNotNull(command);
+    public void parse_tagPrefix_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("friend"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/friend", expectedCommand);
     }
 
     @Test
-    public void parse_positionPrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("pos/Manager");
-        assertNotNull(command);
+    public void parse_multipleFields_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alice"))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alice d/IT e/gmail", expectedCommand);
     }
 
     @Test
-    public void parse_departmentPrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("d/Finance");
-        assertNotNull(command);
+    public void parse_nameAndTag_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alex"))
+                        .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alex t/friend", expectedCommand);
     }
 
     @Test
-    public void parse_emailPrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("e/gmail");
-        assertNotNull(command);
+    public void parse_tagAndDepartment_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("backend"))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/backend d/IT", expectedCommand);
     }
 
     @Test
-    public void parse_multipleSamePrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice n/Bob");
-        assertNotNull(command);
+    public void parse_multipleKeywordsInName_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alex", "John"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alex John", expectedCommand);
     }
 
     @Test
-    public void parse_mixedPrefixesDifferentOrder_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("e/gmail n/Alice d/IT");
-        assertNotNull(command);
+    public void parse_multipleKeywordsInDepartment_success() {
+        Predicate<Employee> predicate =
+                new DepartmentContainsKeywordsPredicate(Arrays.asList("Human", "Resource"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "d/Human Resource", expectedCommand);
     }
 
     @Test
-    public void parse_invalidPrefixIgnored_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("x/unknown n/Alice");
-        assertNotNull(command);
+    public void parse_multipleKeywordsInTag_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("friend", "leader"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/friend leader", expectedCommand);
     }
 
     @Test
-    public void parse_prefixWithoutValue_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("d/");
-        assertNotNull(command);
+    public void parse_prefixesInDifferentOrder_success() {
+        Predicate<Employee> predicate =
+                new EmailContainsKeywordsPredicate(Arrays.asList("gmail"))
+                        .and(new NameContainsKeywordsPredicate(Arrays.asList("Alice")))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "e/gmail n/Alice d/IT", expectedCommand);
     }
 
     @Test
-    public void parse_leadingWhitespace_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("   n/Alice");
-        assertNotNull(command);
+    public void parse_tagPrefixInFront_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("friend", "leader"))
+                        .and(new NameContainsKeywordsPredicate(Arrays.asList("Alex")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/friend leader n/Alex", expectedCommand);
     }
 
     @Test
-    public void parse_trailingWhitespace_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice   ");
-        assertNotNull(command);
+    public void parse_tagPrefixAtEnd_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alex"))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
+                        .and(new TagContainsKeywordsPredicate(Arrays.asList("friend", "leader")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alex d/IT t/friend leader", expectedCommand);
     }
 
     @Test
-    public void parse_extraSpacesBetweenPrefixes_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice    d/IT");
-        assertNotNull(command);
+    public void parse_multiKeywordNameStopsAtNextPrefix_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alex", "John"))
+                        .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "n/Alex John t/friend", expectedCommand);
     }
 
     @Test
-    public void parse_uppercase_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/ALICE");
-        assertNotNull(command);
+    public void parse_multiKeywordTagStopsAtNextPrefix_success() {
+        Predicate<Employee> predicate =
+                new TagContainsKeywordsPredicate(Arrays.asList("friend", "leader", "mentor"))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/friend leader mentor d/IT", expectedCommand);
     }
 
     @Test
-    public void parse_mixedCaseValues_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/AlIcE");
-        assertNotNull(command);
-    }
+    public void parse_allPrefixesTogether_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alice"))
+                        .and(new DepartmentContainsKeywordsPredicate(Arrays.asList("IT")))
+                        .and(new PhoneContainsKeywordsPredicate(Arrays.asList("9123")))
+                        .and(new EmailContainsKeywordsPredicate(Arrays.asList("gmail")))
+                        .and(new PositionContainsKeywordsPredicate(Arrays.asList("Manager")))
+                        .and(new TagContainsKeywordsPredicate(Arrays.asList("friend")));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
 
-
-    @Test
-    public void parse_multipleKeywordsInName_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice Bob Charlie");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_multipleKeywordsInDepartment_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("d/Finance HR");
-        assertNotNull(command);
+        assertParseSuccess(parser, "n/Alice d/IT p/9123 e/gmail pos/Manager t/friend", expectedCommand);
     }
 
     @Test
-    public void parse_allPrefixesTogether_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice d/IT e/gmail p/9123 pos/Manager");
-        assertNotNull(command);
+    public void parse_blankTagWithOtherValidPrefix_success() {
+        Predicate<Employee> predicate =
+                new NameContainsKeywordsPredicate(Arrays.asList("Alex"));
+        ShowCommand expectedCommand = new ShowCommand(predicate);
+
+        assertParseSuccess(parser, "t/ n/Alex", expectedCommand);
     }
 
     @Test
-    public void parse_twoPrefixes_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice e/gmail");
-        assertNotNull(command);
+    public void parse_blankPrefixOnly_returnsFalsePredicateCommand() {
+        ShowCommand expectedCommand = new ShowCommand(employee -> false);
+
+        assertParseSuccess(parser, "t/", expectedCommand);
     }
 
     @Test
-    public void parse_threePrefixes_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice d/IT ph/9123");
-        assertNotNull(command);
-    }
+    public void parse_noValidPrefix_returnsFalsePredicateCommand() {
+        ShowCommand expectedCommand = new ShowCommand(employee -> false);
 
-    @Test
-    public void parse_randomTextWithPrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("random n/Alice text");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_symbolsInValue_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("e/@gmail.com");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_numbersInName_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice123");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_onlyPrefixCharacters_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_phonePrefixNotConfusedWithPosition_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("p/9123 pos/Manager");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_positionPrefixNotConfusedWithPhone_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("pos/Manager p/9123");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_repeatedSamePrefix_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice n/Bob n/Charlie");
-        assertNotNull(command);
-    }
-
-    @Test
-    public void parse_repeatedDifferentPrefixes_returnsCommand() throws Exception {
-        ShowCommand command = parser.parse("n/Alice d/IT n/Bob d/HR");
-        assertNotNull(command);
+        assertParseSuccess(parser, "Alice", expectedCommand);
     }
 }
