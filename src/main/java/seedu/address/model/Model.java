@@ -98,15 +98,11 @@ public interface Model {
 
     void addTaskToPerson(Employee person, Task task);
 
-    /**
-     * Removes all completed tasks.
-     */
-    void removeCompletedTasks();
+    void addTaskOverall(Task task, Employee person);
 
-    /**
-     * Marks a task as completed.
-     */
-    void markTask(int index);
+    void showAllTasks();
+
+
 
 
 }

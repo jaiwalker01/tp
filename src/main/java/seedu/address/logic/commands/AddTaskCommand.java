@@ -54,8 +54,13 @@ public class AddTaskCommand extends Command {
 
         requireNonNull(model);
         Employee person = getPerson(personName, model);
+
         if (person != null) {
+            task.incrementTaskIndex();
             model.addTaskToPerson(person, task);
+            model.addTaskOverall(task, person);
+            model.showAllTasks();
+
             return new CommandResult(String.format(MESSAGE_SUCCESS, task));
         } else {
             return new CommandResult("Person not found in the address book.");

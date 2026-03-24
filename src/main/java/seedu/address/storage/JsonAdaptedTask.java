@@ -15,6 +15,8 @@ class JsonAdaptedTask {
 
     private final String taskName;
     private final String taskDescription;
+    private final int currentTaskIndex;
+
 
     /**
      * Constructs a {@code JsonAdaptedTask} with the given task details.
@@ -25,9 +27,12 @@ class JsonAdaptedTask {
     @JsonCreator
     public JsonAdaptedTask(
             @JsonProperty("taskName") String taskName,
-            @JsonProperty("taskDescription") String taskDescription) {
+            @JsonProperty("taskDescription") String taskDescription,
+            @JsonProperty("currentTaskIndex") int currentTaskIndex) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
+
+        this.currentTaskIndex = currentTaskIndex;
     }
 
     /**
@@ -38,6 +43,7 @@ class JsonAdaptedTask {
     public JsonAdaptedTask(Task source) {
         this.taskName = source.getTaskName();
         this.taskDescription = source.getTaskDescription();
+        this.currentTaskIndex = source.getCurrentTaskIndex();
     }
 
     /**
@@ -59,6 +65,6 @@ class JsonAdaptedTask {
         if (!Task.isValidTaskDescription(taskDescription)) {
             throw new IllegalValueException(Task.MESSAGE_CONSTRAINTS_TASK_DESCRIPTION);
         }
-        return new Task(taskName, taskDescription);
+        return new Task(taskName, taskDescription, currentTaskIndex);
     }
 }

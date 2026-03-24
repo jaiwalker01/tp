@@ -34,7 +34,7 @@ public class AddTaskCommandParser implements Parser<AddTaskCommand> {
         String taskName = argMultimap.getValue(PREFIX_TASK_NAME).get();
         String taskDescription = argMultimap.getValue(PREFIX_TASK_DESCRIPTION).get();
         String personName = argMultimap.getValue(PREFIX_NAME).get();
-        return new AddTaskCommand(new Task(taskName, taskDescription), personName);
+        return new AddTaskCommand(new Task(taskName, taskDescription, Task.getOverallIndex()), personName);
     }
 
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {

@@ -45,7 +45,7 @@ class AddTaskCommandTest {
 
     @Test
     void execute_employeeExists_taskAddedSuccessfully() {
-        Task task = new Task("Finish Homework", "Complete math homework by tomorrow");
+        Task task = new Task("Finish Homework", "Complete math homework by tomorrow", 0);
         AddTaskCommand command = new AddTaskCommand(task, "John Doe");
 
         CommandResult result = command.execute(model);
@@ -60,7 +60,7 @@ class AddTaskCommandTest {
 
     @Test
     void execute_employeeNotFound_returnsErrorMessage() {
-        Task task = new Task("Finish Homework", "Complete math homework by tomorrow");
+        Task task = new Task("Finish Homework", "Complete math homework by tomorrow", 0);
         AddTaskCommand command = new AddTaskCommand(task, "Nonexistent Person");
 
         CommandResult result = command.execute(model);
@@ -70,8 +70,8 @@ class AddTaskCommandTest {
 
     @Test
     void equals() {
-        Task task1 = new Task("Task1", "Desc1");
-        Task task2 = new Task("Task2", "Desc2");
+        Task task1 = new Task("Task1", "Desc1", 0);
+        Task task2 = new Task("Task2", "Desc2", 0);
 
         AddTaskCommand command1 = new AddTaskCommand(task1, "John Doe");
         AddTaskCommand command2 = new AddTaskCommand(task1, "John Doe");

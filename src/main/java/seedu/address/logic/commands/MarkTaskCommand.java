@@ -26,7 +26,7 @@ public class MarkTaskCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
 
-        model.markTask(index);
+        //model.markTask(index);
 
         return new CommandResult(MESSAGE_SUCCESS);
     }

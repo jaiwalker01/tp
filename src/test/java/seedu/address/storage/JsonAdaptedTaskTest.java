@@ -14,10 +14,11 @@ class JsonAdaptedTaskTest {
     private static final String VALID_TASK_DESCRIPTION = "Due by 2024-06-30";
     private static final String INVALID_TASK_NAME = "";
     private static final String INVALID_TASK_DESCRIPTION = "";
+    private static final int VALID_TASK_INDEX = 0;
 
     @Test
     void toModelType_validTask_success() throws Exception {
-        Task task = new Task(VALID_TASK_NAME, VALID_TASK_DESCRIPTION);
+        Task task = new Task(VALID_TASK_NAME, VALID_TASK_DESCRIPTION, VALID_TASK_INDEX);
         JsonAdaptedTask adaptedTask = new JsonAdaptedTask(task);
         Task convertedTask = adaptedTask.toModelType();
         assertEquals(task, convertedTask);
@@ -25,25 +26,25 @@ class JsonAdaptedTaskTest {
 
     @Test
     void toModelType_nullTaskName_throwsIllegalValueException() {
-        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(null, VALID_TASK_DESCRIPTION);
+        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(null, VALID_TASK_DESCRIPTION, VALID_TASK_INDEX);
         assertThrows(IllegalValueException.class, adaptedTask::toModelType);
     }
 
     @Test
     void toModelType_invalidTaskName_throwsIllegalValueException() {
-        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(INVALID_TASK_NAME, VALID_TASK_DESCRIPTION);
+        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(INVALID_TASK_NAME, VALID_TASK_DESCRIPTION, VALID_TASK_INDEX);
         assertThrows(IllegalValueException.class, adaptedTask::toModelType);
     }
 
     @Test
     void toModelType_nullTaskDescription_throwsIllegalValueException() {
-        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(VALID_TASK_NAME, null);
+        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(VALID_TASK_NAME, null, VALID_TASK_INDEX);
         assertThrows(IllegalValueException.class, adaptedTask::toModelType);
     }
 
     @Test
     void toModelType_invalidTaskDescription_throwsIllegalValueException() {
-        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(VALID_TASK_NAME, INVALID_TASK_DESCRIPTION);
+        JsonAdaptedTask adaptedTask = new JsonAdaptedTask(VALID_TASK_NAME, INVALID_TASK_DESCRIPTION, VALID_TASK_INDEX);
         assertThrows(IllegalValueException.class, adaptedTask::toModelType);
     }
 }

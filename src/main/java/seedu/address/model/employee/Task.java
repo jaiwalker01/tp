@@ -9,17 +9,21 @@ public class Task {
     private String taskName;
     private String taskDescription;
     private boolean isCompleted;
+    public static int taskIndex = 1;
+    private int currentTaskIndex;
 
     /**
      * Constructor for Task.
      * @param taskName the name of the task.
      * @param taskDescription the description of the task.
      */
-    public Task(String taskName, String taskDescription) {
+    public Task(String taskName, String taskDescription, int currentTaskIndex) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
-        this.isCompleted = false;
+        this.currentTaskIndex = currentTaskIndex;
+
     }
+
 
     public static boolean isValidTaskName(String taskName) {
         return taskName != null && !taskName.trim().isEmpty();
@@ -63,6 +67,10 @@ public class Task {
         isCompleted = true;
     }
 
+    public int getCurrentTaskIndex() {
+        return currentTaskIndex;
+    }
+
     /**
      * Returns the string representation of the task.
      *
@@ -70,7 +78,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        return taskName + ": " + taskDescription;
+        return "#" + currentTaskIndex + " " + taskName + ": " + taskDescription;
     }
 
     @Override
@@ -86,6 +94,15 @@ public class Task {
         Task otherTask = (Task) other;
         return taskName.equals(otherTask.taskName)
                 && taskDescription.equals(otherTask.taskDescription);
+    }
+
+
+    public void incrementTaskIndex() {
+        taskIndex++;
+    }
+
+    public static int getOverallIndex() {
+        return taskIndex;
     }
 
 

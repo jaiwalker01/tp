@@ -174,14 +174,18 @@ public class AddCommandTest {
         }
 
         @Override
-        public void markTask(int index) {
+        public void addTaskOverall(Task task, Employee person) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removeCompletedTasks() {
+        public void showAllTasks() {
             throw new AssertionError("This method should not be called.");
+
         }
+
+
+
     }
 
     /**

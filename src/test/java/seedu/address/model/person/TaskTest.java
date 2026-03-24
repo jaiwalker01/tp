@@ -12,10 +12,11 @@ class TaskTest {
 
     @Test
     void constructor_andGetters_workCorrectly() {
-        Task task = new Task("Homework", "Finish math exercises");
+        Task task = new Task("Homework", "Finish math exercises", 0);
 
         assertEquals("Homework", task.getTaskName());
         assertEquals("Finish math exercises", task.getTaskDescription());
+        assertEquals(0, task.getCurrentTaskIndex());
     }
 
     @Test
@@ -38,7 +39,7 @@ class TaskTest {
 
     @Test
     void toString_returnsCorrectFormat() {
-        Task task = new Task("Task 1", "2024-06-30");
-        assertEquals("Task 1: 2024-06-30", task.toString());
+        Task task = new Task("Task 1", "2024-06-30", 0);
+        assertEquals("#0 Task 1: 2024-06-30", task.toString());
     }
 }

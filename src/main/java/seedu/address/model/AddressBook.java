@@ -101,28 +101,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    /**
-     * Removes all completed tasks.
-     */
-    public void removeCompletedTasks() {
-        tasks.removeCompletedTasks();
-    }
 
-    /**
-     * Marks a task as completed.
-     *
-     * @param index zero-based index
-     */
-    public void markTask(int index) {
-        requireNonNull(tasks);
-        tasks.markTask(index);
-    }
+
+
 
     /**
      * Adds a task to the task list.
      */
-    public void addTask(Task task) {
-        tasks.addTaskOverall(task);
+    public void addTask(Task task, Employee person) {
+        tasks.addTaskOverall(task, person);
+    }
+
+    public void showAllTask() {
+        tasks.showFullTaskList();
     }
 
 

@@ -24,7 +24,7 @@ class AddTaskCommandParserTest {
 
         AddTaskCommand command = parser.parse(userInput);
 
-        Task expectedTask = new Task(VALID_TASK_NAME_1, VALID_TASK_DESCRIPTION_1);
+        Task expectedTask = new Task(VALID_TASK_NAME_1, VALID_TASK_DESCRIPTION_1, Task.getOverallIndex());
         AddTaskCommand expectedCommand = new AddTaskCommand(expectedTask, VALID_NAME_AMY);
 
         assertEquals(expectedCommand, command);
