@@ -4,6 +4,8 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NoSuchElementException;
 
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Task;
@@ -50,5 +52,36 @@ public class TaskList {
             index++;
         }
         return sb.toString();
+    }
+
+    /**
+     * Deletes and returns the task with the specified task index.
+     *
+     * @param taskIndex the displayed task index.
+     * @return the deleted task.
+     */
+    public Task deleteTask(int taskIndex) {
+        Entry<Task, Employee> entry = findEntryByTaskIndex(taskIndex);
+        internalMap.remove(entry.getKey());
+        return entry.getKey();
+    }
+
+    /**
+     * Returns the employee assigned to the task with the specified task index.
+     *
+     * @param taskIndex the displayed task index.
+     * @return the employee assigned to the task.
+     */
+    public Employee getPersonAssignedToTask(int taskIndex) {
+        return findEntryByTaskIndex(taskIndex).getValue();
+    }
+
+    private Entry<Task, Employee> findEntryByTaskIndex(int taskIndex) {
+        for (Entry<Task, Employee> entry : internalMap.entrySet()) {
+            if (entry.getKey().getCurrentTaskIndex() == taskIndex) {
+                return entry;
+            }
+        }
+        throw new NoSuchElementException();
     }
 }

@@ -1,5 +1,7 @@
 package seedu.address.model.employee;
 
+import java.util.Objects;
+
 /**
  * A class to represent a Task.
  */
@@ -11,7 +13,6 @@ public class Task {
 
     private String taskName;
     private String taskDescription;
-    private boolean isCompleted;
     private int currentTaskIndex;
 
     /**
@@ -54,22 +55,6 @@ public class Task {
         return taskDescription;
     }
 
-    /**
-     * Returns true if the task is completed.
-     *
-     * @return True if completed, false otherwise.
-     */
-    public boolean isCompleted() {
-        return isCompleted;
-    }
-
-    /**
-     * Marks the task as completed.
-     */
-    public void markAsCompleted() {
-        isCompleted = true;
-    }
-
     public int getCurrentTaskIndex() {
         return currentTaskIndex;
     }
@@ -96,7 +81,13 @@ public class Task {
 
         Task otherTask = (Task) other;
         return taskName.equals(otherTask.taskName)
-                && taskDescription.equals(otherTask.taskDescription);
+                && taskDescription.equals(otherTask.taskDescription)
+                && currentTaskIndex == otherTask.currentTaskIndex;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(taskName, taskDescription, currentTaskIndex);
     }
 
 

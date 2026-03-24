@@ -178,5 +178,10 @@ public class ModelManager implements Model {
         addressBook.showAllTask();
     }
 
+    @Override
+    public void deleteTask(int taskIndex) {
+        addressBook.deleteTask(taskIndex);
+    }
+
 
 }

@@ -101,6 +101,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
+    public void deleteTask(int taskIndex) {
+        Employee assignedPerson = tasks.getPersonAssignedToTask(taskIndex);
+        Task deletedTask = tasks.deleteTask(taskIndex);
+        persons.deleteTaskFromPerson(assignedPerson, deletedTask);
+    }
+
 
 
 
