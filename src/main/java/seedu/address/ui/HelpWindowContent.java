@@ -20,8 +20,9 @@ public final class HelpWindowContent {
                         "n/NAME p/PHONE e/EMAIL d/DEPARTMENT pos/POSITION [t/TAG]...",
                         List.of("add n/John Doe p/98765432 e/johnd@example.com d/IT pos/Software Engineer "
                                 + "t/fulltime")),
-                new HelpSection("delete", "Deletes an employee by unique name or list index.",
-                        "NAME or INDEX.", List.of("delete John Doe", "delete 2")),
+                new HelpSection("delete", "Deletes one or more employees by unique name or list index.",
+                        "NAME or INDEX [MORE_INDEXES]...", List.of("delete John Doe", "delete 2",
+                                "delete 1 3 5")),
                 new HelpSection("edit", "Edits an employee identified by index.",
                         "INDEX with one or more optional fields: [n/NAME] [p/PHONE] [e/EMAIL] "
                                 + "[d/DEPARTMENT] [pos/POSITION] [t/TAG]...",

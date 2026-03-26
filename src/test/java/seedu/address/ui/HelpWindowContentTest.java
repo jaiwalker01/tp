@@ -25,7 +25,11 @@ public class HelpWindowContentTest {
         assertIterableEquals(List.of("help"), helpSections.get(0).examples());
 
         assertEquals("delete", helpSections.get(2).commandWord());
-        assertIterableEquals(List.of("delete John Doe", "delete 2"), helpSections.get(2).examples());
+        assertEquals("Deletes one or more employees by unique name or list index.",
+                helpSections.get(2).description());
+        assertEquals("NAME or INDEX [MORE_INDEXES]...", helpSections.get(2).allowedInput());
+        assertIterableEquals(List.of("delete John Doe", "delete 2", "delete 1 3 5"),
+                helpSections.get(2).examples());
 
         assertEquals("exit", helpSections.get(helpSections.size() - 1).commandWord());
         assertEquals("No additional parameters.", helpSections.get(helpSections.size() - 1).allowedInput());
@@ -46,7 +50,8 @@ public class HelpWindowContentTest {
 
         assertIterableEquals(List.of(
                 new DisplayLine("Example: delete John Doe", "help-command-example"),
-                new DisplayLine("Example: delete 2", "help-command-example")),
+                new DisplayLine("Example: delete 2", "help-command-example"),
+                new DisplayLine("Example: delete 1 3 5", "help-command-example")),
                 displaySections.get(2).exampleLines());
     }
 
@@ -67,6 +72,7 @@ public class HelpWindowContentTest {
                 """.stripTrailing(), formattedHelpText.lines().limit(9).reduce((a, b) -> a + "\n" + b).orElse(""));
         assertTrue(formattedHelpText.contains("Example: delete John Doe"));
         assertTrue(formattedHelpText.contains("Example: delete 2"));
+        assertTrue(formattedHelpText.contains("Example: delete 1 3 5"));
         assertTrue(formattedHelpText.contains("exit"));
     }
 }

@@ -62,6 +62,8 @@ contact details, roles, departments, and assigned tasks more efficiently.
 
    * `delete John Doe` : Deletes the employee named `John Doe` if the name is unique in the current list.
 
+   * `delete 1 3 5` : Deletes the 1st, 3rd, and 5th employees in the currently displayed list.
+
    * `addtask task/Prepare Report desc/Submit by Friday n/John Doe` : Adds a task to employee `John Doe`.
 
    * `deletetask 1` : Deletes the task with task index `1`.
@@ -419,7 +421,7 @@ _More features coming soon ..._
 | Action                                | Command      | Format                                                                                                                                                             |
 |---------------------------------------|--------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Add an employee to contacts           | **Add**      | `add n/NAME p/PHONE e/EMAIL d/DEPARTMENT pos/POSITION [t/TAG]...`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com d/Finance pos/Analyst t/fulltime`     |
-| Delete an employee from contacts      | **Delete**   | `delete NAME` or `delete INDEX`<br> e.g., `delete James Ho`, `delete 3`                                                                                            |
+| Delete an employee from contacts      | **Delete**   | `delete NAME` or `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete James Ho`, `delete 3`, `delete 1 3 5`                                                         |
 | Edit an employee's details            | **Edit**     | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/DEPARTMENT] [pos/POSITION] [t/TAG]...`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                           |
 | List all employees in contacts        | **List**     | `list`                                                                                                                                                             |
 | Show filtered employees from contacts | **Show**     | `show [n/NAME] [d/DEPARTMENT] [p/PHONE] [e/EMAIL] [pos/POSITION] [t/TAG] [task/TASK]...` <br> e.g., `show n/Ja d/Finance pos/Develepor HR Management t/Nightshift` |
