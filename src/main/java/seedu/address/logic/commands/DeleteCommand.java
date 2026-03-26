@@ -2,8 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -15,22 +21,27 @@ import seedu.address.model.employee.Employee;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the employee identified by their name or index.\n"
-            + "Parameters: NAME or INDEX (must consist of alphabets and optional '/', "
-            + "case-insensitive, leading spaces normalized) \n"
-            + "Example: " + COMMAND_WORD + " John Doe";
+            + ": Deletes one or more employees identified by name or index.\n"
+            + "Parameters: NAME or INDEX [MORE_INDEXES]...\n"
+            + "Examples: " + COMMAND_WORD + " John Doe\n"
+            + "          " + COMMAND_WORD + " 2\n"
+            + "          " + COMMAND_WORD + " 1 3 5";
 
     public static final String MESSAGE_DELETE_EMPLOYEE_SUCCESS = "Deleted Employee: %1$s";
+    public static final String MESSAGE_DELETE_EMPLOYEES_SUCCESS = "Deleted Employees:\n%1$s";
     public static final String MESSAGE_INVALID_NAME = "Name must contain only alphabets and optional '/'.";
     public static final String MESSAGE_EMPLOYEE_NOT_FOUND = "Employee with name '%1$s' does not exist.";
     public static final String MESSAGE_DUPLICATE_EMPLOYEE_NAME =
             "Multiple employees named '%1$s' found. Please use the index instead.";
     public static final String MESSAGE_INVALID_INDEX = "The employee index provided is invalid.";
+    public static final String MESSAGE_DUPLICATE_INDEX = "Duplicate employee indexes are not allowed.";
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
 
     private final Integer targetIndex; // null if not used
     private final String targetName; // null if not used
+    private final List<Index> targetIndexes; // empty if not used
 
     /**
      * Constructor for index-based deletion.
@@ -39,6 +50,7 @@ public class DeleteCommand extends Command {
     public DeleteCommand(int targetIndex) {
         this.targetIndex = targetIndex;
         this.targetName = null;
+        this.targetIndexes = List.of();
     }
 
     /**
@@ -48,6 +60,18 @@ public class DeleteCommand extends Command {
     public DeleteCommand(String targetName) {
         this.targetIndex = null;
         this.targetName = targetName;
+        this.targetIndexes = List.of();
+    }
+
+    /**
+     * Constructor for batch index-based deletion.
+     * @param targetIndexes Indexes of employees to delete.
+     */
+    public DeleteCommand(List<Index> targetIndexes) {
+        requireNonNull(targetIndexes);
+        this.targetIndex = null;
+        this.targetName = null;
+        this.targetIndexes = List.copyOf(targetIndexes);
     }
 
     /**
@@ -59,9 +83,13 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        Employee personToDelete = null;
         List<Employee> lastShownList = model.getFilteredPersonList();
 
+        if (!targetIndexes.isEmpty()) {
+            return executeBatchDelete(model, lastShownList);
+        }
+
+        Employee personToDelete = null;
         if (targetIndex != null) {
             // Index-based deletion
             if (targetIndex < 1 || targetIndex > lastShownList.size()) {
@@ -94,8 +122,33 @@ public class DeleteCommand extends Command {
         }
 
         model.deletePerson(personToDelete);
+        logger.info("Deleted employee: " + personToDelete.getName().fullName);
         return new CommandResult(
                 String.format(MESSAGE_DELETE_EMPLOYEE_SUCCESS, Messages.format(personToDelete)));
+    }
+
+    private CommandResult executeBatchDelete(Model model, List<Employee> lastShownList) throws CommandException {
+        assert !targetIndexes.isEmpty();
+
+        List<Employee> employeesToDelete = new ArrayList<>();
+        for (Index index : targetIndexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                logger.warning("Rejected batch delete due to invalid index: " + index.getOneBased());
+                throw new CommandException(MESSAGE_INVALID_INDEX);
+            }
+            employeesToDelete.add(lastShownList.get(index.getZeroBased()));
+        }
+
+        targetIndexes.stream()
+                .sorted(Comparator.comparingInt(Index::getZeroBased).reversed())
+                .forEach(index -> model.deletePerson(lastShownList.get(index.getZeroBased())));
+
+        String deletedEmployeesSummary = employeesToDelete.stream()
+                .map(Messages::format)
+                .collect(Collectors.joining("\n"));
+
+        logger.info("Deleted " + employeesToDelete.size() + " employees in batch delete command.");
+        return new CommandResult(String.format(MESSAGE_DELETE_EMPLOYEES_SUCCESS, deletedEmployeesSummary));
     }
 
     /**
@@ -139,7 +192,8 @@ public class DeleteCommand extends Command {
                 : targetIndex.equals(that.targetIndex))
             && (targetName == null
                 ? that.targetName == null
-                : targetName.equals(that.targetName));
+                : targetName.equals(that.targetName))
+            && targetIndexes.equals(that.targetIndexes);
     }
 
     /**
@@ -151,6 +205,9 @@ public class DeleteCommand extends Command {
         if (targetIndex != null) {
             return DeleteCommand.class.getCanonicalName()
                 + "{targetIndex=" + targetIndex + "}";
+        } else if (!targetIndexes.isEmpty()) {
+            return DeleteCommand.class.getCanonicalName()
+                + "{targetIndexes=" + targetIndexes + "}";
         } else {
             return DeleteCommand.class.getCanonicalName()
                 + "{targetName=" + targetName + "}";

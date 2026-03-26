@@ -312,13 +312,16 @@ Examples:
 <a id="deleting-an-employee"></a>
 ### Deleting an employee : `delete`
 
-Deletes the specified employee from the address book.
+Deletes one or more specified employees from the address book.
 
-Format: `delete NAME` or `delete INDEX`
+Format: `delete NAME` or `delete INDEX [MORE_INDEXES]...`
 
 * `delete INDEX` deletes the employee at the specified `INDEX`.
 * The index refers to the index number shown in the displayed employee list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* You can provide multiple indexes in one command to batch delete employees.
+* When multiple indexes are provided, every index must be valid before any employee is deleted.
+* Duplicate indexes in the same command are not allowed.
 * `delete NAME` deletes the employee whose name matches `NAME`, ignoring case and extra spaces.
 * `delete NAME` works only when exactly one employee matches the given name.
 * If multiple employees share the same name, use `delete INDEX` instead.
@@ -326,6 +329,7 @@ Format: `delete NAME` or `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd employee in the address book.
 * `show d/HR` followed by `delete 1` deletes the 1st employee in the filtered employee list.
+* `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th employees in the displayed employee list.
 * `delete John Doe` deletes the employee named `John Doe` if the name is unique in the current list.
 
 <a id="adding-a-task-to-an-employee"></a>
@@ -337,6 +341,8 @@ Format: `addtask task/TASK_NAME desc/TASK_DESCRIPTION n/EMPLOYEE_NAME`
 
 * The employee name must match an existing employee name exactly as stored in ManageUp.
 * The task will be added to that employee's task list and shown on the employee card.
+* The task will have an index number attached to it, to indicate task number.
+* The format should be followed exactly as stated and no jumbling of task name and task description tags
 
 Examples:
 * `addtask task/Prepare Report desc/Submit by Friday n/John Doe`

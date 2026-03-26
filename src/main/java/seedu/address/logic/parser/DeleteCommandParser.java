@@ -2,6 +2,10 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -21,7 +25,13 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             throw new ParseException(
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
-        // Try parsing as index
+
+        String[] tokens = trimmedArgs.split("\\s+");
+        if (tokens.length > 1 && areAllIndexes(tokens)) {
+            return new DeleteCommand(parseIndexes(tokens));
+        }
+
+        // Try parsing as single index
         try {
             int index = Integer.parseInt(trimmedArgs);
             if (index < 1) {
@@ -36,6 +46,33 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
             }
             return new DeleteCommand(trimmedArgs);
         }
+    }
+
+    private boolean areAllIndexes(String[] tokens) {
+        for (String token : tokens) {
+            try {
+                int value = Integer.parseInt(token);
+                if (value < 1) {
+                    return false;
+                }
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private List<Index> parseIndexes(String[] tokens) throws ParseException {
+        List<Index> indexes = new ArrayList<>();
+        for (String token : tokens) {
+            int value = Integer.parseInt(token);
+            Index index = Index.fromOneBased(value);
+            if (indexes.contains(index)) {
+                throw new ParseException(DeleteCommand.MESSAGE_DUPLICATE_INDEX);
+            }
+            indexes.add(index);
+        }
+        return indexes;
     }
 
 }

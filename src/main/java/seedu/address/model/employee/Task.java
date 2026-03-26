@@ -2,6 +2,7 @@ package seedu.address.model.employee;
 
 import java.util.Objects;
 
+
 /**
  * A class to represent a Task.
  */
@@ -90,7 +91,6 @@ public class Task {
         return Objects.hash(taskName, taskDescription, currentTaskIndex);
     }
 
-
     public void incrementTaskIndex() {
         taskIndex++;
     }
@@ -98,6 +98,13 @@ public class Task {
     public static int getOverallIndex() {
         return taskIndex;
     }
+
+
+    public static void setTaskIndex(int index) {
+        taskIndex = index;
+    }
+
+
 
 
 }

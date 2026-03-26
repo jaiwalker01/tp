@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import javafx.collections.transformation.FilteredList;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Task;
 
@@ -15,21 +16,52 @@ import seedu.address.model.employee.Task;
  */
 public class TaskList {
 
+    private static int latestTaskIndex = 1;
     private final Map<Task, Employee> internalMap = new HashMap<>();
 
     /**
+     * Constructor for TaskList
+     * @param employees Filtered List of Employees.
+     */
+    public TaskList(FilteredList<Employee> employees) {
+        requireNonNull(employees);
+
+        for (Employee person : employees) {
+            for (Task task : person.getTasks()) {
+                if (task.getCurrentTaskIndex() > latestTaskIndex) {
+                    latestTaskIndex = task.getCurrentTaskIndex();
+                }
+                internalMap.put(task, person);
+                Task.setTaskIndex(latestTaskIndex + 1);
+            }
+        }
+
+    }
+
+    /**
+     * Empty TaskList Constructor for testing.
+     */
+    public TaskList() {
+
+    }
+
+
+    /**
      * Adds a task to the list with the assigned employee.
-     * @param task the task to be added.
+     *
+     * @param task   the task to be added.
      * @param person the employee to whom the task is assigned.
      */
     public void addTaskOverall(Task task, Employee person) {
         requireNonNull(task);
         requireNonNull(person);
         internalMap.put(task, person);
+
     }
 
     /**
      * Returns a string representation of all tasks and their assigned employees.
+     *
      * @return a string listing all tasks and their assigned employees.
      */
     public String showFullTaskList() {
@@ -84,4 +116,5 @@ public class TaskList {
         }
         throw new NoSuchElementException();
     }
+
 }

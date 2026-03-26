@@ -458,8 +458,14 @@ testers are expected to do more *exploratory* testing.
    1. Test case: `delete 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
+   1. Test case: `delete 1 3`<br>
+      Expected: Both contacts are deleted from the list in a single command. Details of the deleted contacts shown in the status message. Timestamp in the status bar is updated.
+
    1. Test case: `delete 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+
+   1. Test case: `delete 2 2`<br>
+      Expected: No person is deleted. Error details shown in the status message because duplicate indexes are not allowed.
 
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
