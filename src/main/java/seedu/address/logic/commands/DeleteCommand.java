@@ -21,8 +21,6 @@ import seedu.address.model.employee.Employee;
 public class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
-    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
-
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes one or more employees identified by name or index.\n"
             + "Parameters: NAME or INDEX [MORE_INDEXES]...\n"
@@ -38,6 +36,8 @@ public class DeleteCommand extends Command {
             "Multiple employees named '%1$s' found. Please use the index instead.";
     public static final String MESSAGE_INVALID_INDEX = "The employee index provided is invalid.";
     public static final String MESSAGE_DUPLICATE_INDEX = "Duplicate employee indexes are not allowed.";
+
+    private static final Logger logger = LogsCenter.getLogger(DeleteCommand.class);
 
     private final Integer targetIndex; // null if not used
     private final String targetName; // null if not used
