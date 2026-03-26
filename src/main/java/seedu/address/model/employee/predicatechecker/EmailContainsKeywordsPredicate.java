@@ -14,6 +14,7 @@ public class EmailContainsKeywordsPredicate implements Predicate<Employee> {
     private final List<String> keywords;
 
     public EmailContainsKeywordsPredicate(List<String> keywords) {
+        assert keywords != null : "Keywords list should not be null";
         this.keywords = keywords;
     }
 

@@ -1,6 +1,5 @@
 package seedu.address.logic.parser;
 
-
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
@@ -30,6 +29,8 @@ public class ShowCommandParser implements Parser<ShowCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ShowCommand parse(String args) throws ParseException {
+        assert args != null : "Show command arguments should not be null";
+
         String input = args.trim();
 
         if (input.isEmpty()) {
@@ -117,6 +118,8 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             }
         }
 
+        assert predicate != null : "Predicate should always be initialised";
+
         // If no valid filters → show nothing
         if (!hasFilter) {
             predicate = employee -> false;
@@ -129,6 +132,9 @@ public class ShowCommandParser implements Parser<ShowCommand> {
      * Extracts value after a prefix until the next recognised prefix or end of input.
      */
     private String extract(String input, String prefix) {
+        assert input != null : "Input to extract should not be null";
+        assert prefix != null : "Prefix should not be null";
+
         int start = input.indexOf(prefix);
         if (start == -1) {
             return "";
@@ -150,6 +156,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             }
         }
 
+        assert start <= end : "Extraction start index should not exceed end index";
         return input.substring(start, end).trim();
     }
 }
