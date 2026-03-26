@@ -169,4 +169,25 @@ public class UniquePersonList implements Iterable<Employee> {
         setPerson(personToEdit, editedPerson);
     }
 
+    /**
+     * Deletes the specified task from the specified person in the list.
+     *
+     * @param target The person whose task should be deleted.
+     * @param task The task to delete.
+     */
+    public void deleteTaskFromPerson(Employee target, Task task) {
+        requireAllNonNull(target, task);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new PersonNotFoundException();
+        }
+        Employee personToEdit = internalList.get(index);
+        Employee editedPerson = new Employee(personToEdit.getName(), personToEdit.getPhone(),
+                personToEdit.getEmail(), personToEdit.getDepartment(), personToEdit.getPosition(),
+                personToEdit.getTags(),
+                personToEdit.getTaskListStorage());
+        editedPerson.deleteTask(task);
+        setPerson(personToEdit, editedPerson);
+    }
+
 }

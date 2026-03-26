@@ -102,6 +102,8 @@ public interface Model {
 
     void showAllTasks();
 
+    void deleteTask(int taskIndex);
+
 
 
 

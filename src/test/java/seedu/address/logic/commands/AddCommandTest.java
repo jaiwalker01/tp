@@ -184,6 +184,11 @@ public class AddCommandTest {
 
         }
 
+        @Override
+        public void deleteTask(int taskIndex) {
+            throw new AssertionError("This method should not be called.");
+        }
+
 
 
     }

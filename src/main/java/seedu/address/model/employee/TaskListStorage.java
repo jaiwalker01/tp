@@ -41,6 +41,10 @@ public class TaskListStorage {
         tasks.add(modelType);
     }
 
+    public boolean deleteTask(Task task) {
+        return tasks.remove(task);
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
