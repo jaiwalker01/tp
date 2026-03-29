@@ -6,9 +6,9 @@
 
 # ManageUp User Guide
 
-ManageUp is a **desktop app for managing employee records, optimized for use via a Command Line Interface**
-(CLI) while still providing the benefits of a Graphical User Interface (GUI). It helps teams manage employee
-contact details, roles, departments, and assigned tasks more efficiently.
+ManageUp is a **desktop app for managers to manage employee records, optimized for use via a Command Line Interface**
+(CLI) while still providing the benefits of a Graphical User Interface (GUI). It helps managers manage various teams, 
+tracking employee contact details, roles, departments, and assign tasks more efficiently.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -342,14 +342,19 @@ Adds a task to a specific employee.
 
 Format: `addtask task/TASK_NAME desc/TASK_DESCRIPTION n/EMPLOYEE_NAME`
 
-* The employee name must match an existing employee name exactly as stored in ManageUp.
-* The task will be added to that employee's task list and shown on the employee card.
+* `EMPLOYEE_NAME` refers to the name of the employee to whom the task will be added.
+* `EMPLOYEE_NAME` must match an existing employee name exactly as stored in ManageUp and is case-sensitive.
+* The task will be added to that employee's personal task list and shown on the employee card.
 * The task will have an index number attached to it, to indicate task number.
-* The format should be followed exactly as stated and no jumbling of task name and task description tags
+* The format and order of tags should be followed exactly as stated and no field should be left out.
+* `addtask` provides a warning message to the user with the specified format to remind users of the correct format if the command is invalid.
+* `addtask task/Prepare Report n/John Doe` is not valid because the description field is missing.
 
 Examples:
-* `addtask task/Prepare Report desc/Submit by Friday n/John Doe`
-* `addtask task/Client Followup desc/Call client before Monday n/Amy Bee`
+* `addtask task/Prepare Report desc/Submit by Friday n/John Doe` 
+   adds a task named `Prepare Report` with description `Submit by Friday` to employee `John Doe`.
+* `addtask task/Client Followup desc/Call client before Monday n/Amy Bee` 
+   adds a task named `Client Followup` with description `Call client before Monday` to employee `Amy Bee`.
 
 <a id="editing-a-task"></a>
 ### Editing a task: `edittask`
