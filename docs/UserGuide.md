@@ -381,14 +381,19 @@ Deletes one or more tasks using their displayed task indices.
 
 Format: `deletetask INDEX [MORE_INDICES]...`
 
-* `TASK_INDEX` refers to the task index shown beside the task on the employee card, for example `#1`.
-* The index **must be a positive integer** 1, 2, 3, …
+* `INDEX` refers to the task index shown beside the task on the employee card, for example `#1`.
+* Each index **must be a positive integer** 1, 2, 3, …​
 * You can provide multiple task indices in one command to batch delete tasks.
-* Deleting a task removes it from both the employee's task list and the overall task list used internally by the app.
+* When multiple task indices are provided, every task index must be valid before any task is deleted.
+* Duplicate task indices in the same command are not allowed.
+* `deletetask` removes the task from both the employee's personal task list and the overall task list used internally by ManageUp.
+* If an invalid task index is provided, ManageUp will reject the command and no task will be deleted.
+* `deletetask` provides a warning message to the user with the specified format to remind users of the correct format if the command is invalid.
 
 Examples:
-* `deletetask 1`
-* `deletetask 1 3 5`
+* `deletetask 1` deletes the task with task index `1`.
+* `deletetask 2 4` deletes the tasks with task indices `2` and `4`.
+* `deletetask 0` is not valid because task indices must start from `1`.
 
 <a id="clearing-all-entries"></a>
 ### Clearing all entries : `clear`
