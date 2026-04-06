@@ -356,6 +356,11 @@ Examples:
 * `addtask task/Client Followup desc/Call client before Monday n/Amy Bee` 
    adds a task named `Client Followup` with description `Call client before Monday` to employee `Amy Bee`.
 
+  ![addTask message](images/addtaskmessage.png)
+* `addtask`
+   shows the warning message with the correct format for `addtask` because the command is invalid.
+  ![addTaskHelp message](images/addtaskhelp.png)
+
 <a id="editing-a-task"></a>
 ### Editing a task: `edittask`
 
