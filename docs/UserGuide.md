@@ -1,14 +1,35 @@
 ---
   layout: default.md
   title: "User Guide"
-  pageNav: 3
 ---
 
 # ManageUp User Guide
 
-ManageUp is a **desktop app for managers to manage employee records, optimized for use via a Command Line Interface**
-(CLI) while still providing the benefits of a Graphical User Interface (GUI). It helps managers manage various teams, 
-tracking employee contact details, roles, departments, and assign tasks more efficiently.
+ManageUp is an **employee management app** designed for **managers overseeing multiple teams or departments**. It is
+optimised for use via a **Command Line Interface (CLI)**, while still providing the benefits of a
+**Graphical User Interface (GUI)**. The application enables managers to efficiently manage employee information,
+including contact details, positions, departments, and assigned tasks.
+
+Unlike traditional methods such as spreadsheets, scattered documents, or multiple tools, which are often
+time-consuming and error-prone, ManageUp offers a **centralised** and **streamlined** approach to managing employee
+data. In contrast to many current employee management applications that rely primarily on graphical interfaces,
+ManageUp utilises a command-line interface to support faster input and more efficient operations. Its lightweight and
+focused design allows users to quickly add, delete, and edit employee details without unnecessary complexity, making it
+well-suited for managing large teams and frequent updates.
+
+In addition, ManageUp is designed to operate fully **offline**, allowing managers to access and manage employee data
+without relying on an internet connection. This reduces dependency on network availability and ensures the app remains
+usable in environments with unstable connectivity, while also lowering risks associated with online data exposure.
+Moreover, our app functions as a **task organizer** as well, accounting for efficient tracking of tasks to employees.
+
+**Key Features**
+
+To support more efficient employee management, ManageUp:
+
+* Provides a clear overview of employee details through a simple employee list using the `list` command
+* Supports efficient employee management with commands to `add`, `edit`, and `delete` employee records
+* Supports precise filtering of employees using flexible search criteria via the `show` command
+* Enables efficient task tracking and updates with commands such as `addtask` and `deletetask`
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -107,12 +128,53 @@ tracking employee contact details, roles, departments, and assign tasks more eff
 ### Viewing help : `help`
 
 Shows an in-app help window with supported commands, allowed inputs, and examples.
-The help window also includes a button to copy the online user guide URL if you want
-to open the full guide in a browser.
-
-![help message](images/helpMessage.png)
 
 Format: `help`
+
+#### Overview
+
+When you enter `help`, ManageUp opens a separate help window inside the app.
+
+The help window gives a quick summary of:
+
+* supported commands
+* the allowed input format for each command
+* one or more examples you can follow directly
+
+This is useful when you want a quick reminder without scrolling through the full User Guide.
+
+#### Command usage
+
+`help` does not require any additional parameters.
+
+If you type extra text after `help`, ManageUp will still interpret it as `help`.
+
+The help window displays a compact command reference and a button that copies the online User Guide URL to your
+clipboard so you can open the full guide in a browser if needed.
+
+After entering `help`, ManageUp opens the Help Window shown below.
+
+![Help Window](images/Help_PopOutWindow.png)
+
+#### Important notes
+
+<box type="tip" seamless>
+
+**Tip:** Use `help` when you forget a command format or want a quick example before trying a command.
+</box>
+
+* The help window is intended as a quick reference. The full User Guide still contains more detailed explanations and examples.
+
+<box type="warning" seamless>
+
+**Warning:** If the Help Window has been minimized earlier, running `help` again will not open a second Help Window.
+You need to restore the minimized Help Window manually.
+</box>
+
+#### Examples
+
+* `help`
+  Opens the in-app Help Window.
 
 
 <a id="adding-an-employee"></a>
@@ -319,21 +381,108 @@ Deletes one or more specified employees from the address book.
 
 Format: `delete NAME` or `delete INDEX [MORE_INDEXES]...`
 
-* `delete INDEX` deletes the employee at the specified `INDEX`.
-* The index refers to the index number shown in the displayed employee list.
-* The index **must be a positive integer** 1, 2, 3, …​
-* You can provide multiple indexes in one command to batch delete employees.
-* When multiple indexes are provided, every index must be valid before any employee is deleted.
-* Duplicate indexes in the same command are not allowed.
-* `delete NAME` deletes the employee whose name matches `NAME`, ignoring case and extra spaces.
-* `delete NAME` works only when exactly one employee matches the given name.
-* If multiple employees share the same name, use `delete INDEX` instead.
+#### Overview
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd employee in the address book.
-* `show d/HR` followed by `delete 1` deletes the 1st employee in the filtered employee list.
-* `list` followed by `delete 1 3 5` deletes the 1st, 3rd, and 5th employees in the displayed employee list.
-* `delete John Doe` deletes the employee named `John Doe` if the name is unique in the current list.
+The `delete` command supports two ways to remove employees:
+
+* by `NAME`
+* by one or more displayed `INDEX` values
+
+Both forms operate on the **currently displayed employee list**.
+
+This means the result depends on what is currently shown in the app window. For example, after a `show` command, the indexes
+refer to the filtered list instead of the full list.
+
+#### Command usage
+
+##### Deleting by name
+
+Use `delete NAME` when you want to remove an employee by name instead of list position.
+
+* Name matching is **case-insensitive**.
+* Extra spaces in the input are ignored.
+* The entered name must match **one unique employee** in the currently displayed list.
+
+For example, after entering `delete betsy Crowe`, ManageUp deletes the matching employee and shows a success message.
+
+![Deleting an employee by name successfully](images/DeleteEmployee_ByName_Successful.png)
+
+##### Deleting by index
+
+Use `delete INDEX` when you want to remove one displayed employee by position in the current list.
+
+* The index refers to the number shown in the currently displayed employee list.
+* The index **must be a positive integer** such as `1`, `2`, or `3`.
+* Index-based deletion is useful when multiple employees have similar or identical names.
+
+For example, after entering `delete 2`, ManageUp deletes the 2nd displayed employee and shows a success message.
+
+![Deleting an employee by index successfully](images/DeleteEmployee_ByIndex_Successful.png)
+
+##### Batch deletion
+
+You can delete several employees in one command by listing multiple indexes.
+
+* Example format: `delete 1 3 5`
+* Every index must be valid before ManageUp deletes any employee.
+* The order of the indexes does not matter. For example, `delete 13 5 10` and `delete 5 10 13` are both valid as long as all the indexes exist in the currently displayed list.
+* Duplicate indexes in the same command are not allowed. For example, `delete 1 2 2` is not valid because index `2` is duplicated.
+
+This prevents partial deletion when one of the indexes is wrong.
+
+For example, after entering `delete 1 2 3`, ManageUp deletes all three displayed employees and lists them in the success message.
+
+![Batch deleting employees by index successfully](images/DeleteEmployee_BatchDeleteByIndex_Successful.png)
+
+#### Important notes
+
+<box type="tip" seamless>
+
+**Tip:** If you want to delete from the full employee list again after using `show`, run `list` first so the indexes are
+reset to the full list.
+</box>
+
+* `delete NAME` checks only the employees currently shown on screen.
+* `delete INDEX` and batch delete also use the currently displayed list.
+* If an invalid index is provided, no employee will be deleted.
+* If no employee matches the given name, the command will fail.
+* If the entered name contains invalid characters, the command will fail.
+
+For example, entering `delete 100` fails because the provided index is invalid.
+
+![Deleting with an invalid index](images/DeleteEmployee_Error_InvalidIndex.png)
+
+For example, entering `delete max` fails because no displayed employee matches that name.
+
+![Deleting by a name that does not exist](images/DeleteEmployee_Error_NameNotFound.png)
+
+For example, entering `delete 1b#` fails because the name contains invalid characters.
+
+![Deleting with an invalid name](images/DeleteEmployee_Error_InvalidName.png)
+
+<box type="warning" seamless>
+
+**Warning:** If more than one displayed employee has the same name, `delete NAME` will fail. In that case, use
+`delete INDEX` instead.
+</box>
+
+For example, entering `delete john doe` fails because multiple displayed employees have the same name.
+
+![Deleting by name when duplicate names exist](images/DeleteEmployee_Error_DuplicatedNames.png)
+
+#### Examples
+
+* `list` followed by `delete 2`
+  Deletes the 2nd employee in the full employee list.
+
+* `show d/HR` followed by `delete 1`
+  Deletes the 1st employee in the filtered employee list.
+
+* `list` followed by `delete 1 3 5`
+  Deletes the 1st, 3rd, and 5th employees in the displayed employee list.
+
+* `delete John Doe`
+  Deletes the employee named `John Doe` if exactly one displayed employee matches that name.
 
 <a id="adding-a-task-to-an-employee"></a>
 ### Adding a task to an employee : `addtask`
@@ -424,7 +573,6 @@ Advanced users are welcome to update data directly by editing that data file.
 **Caution:**
 If your changes to the data file makes its format invalid, ManageUp will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause ManageUp to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
-</box>
 
 ### More features `[coming in v2.0]`
 
