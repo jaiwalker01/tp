@@ -87,7 +87,7 @@ class AddTaskCommandTest {
         AddTaskCommand command1 = new AddTaskCommand(task1, 1);
         AddTaskCommand command2 = new AddTaskCommand(task1, 1);
         AddTaskCommand command3 = new AddTaskCommand(task2, 1);
-        AddTaskCommand command4 = new AddTaskCommand(task1, 1);
+        AddTaskCommand command4 = new AddTaskCommand(task1, 2);
 
         assertTrue(command1.equals(command2));
 

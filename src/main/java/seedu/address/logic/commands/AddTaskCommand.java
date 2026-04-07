@@ -1,12 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_DESCRIPTION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TASK_NAME;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 
 import seedu.address.model.Model;
 import seedu.address.model.employee.Employee;
@@ -107,7 +103,7 @@ public class AddTaskCommand extends Command {
      */
     public Employee getPerson(int index, Model model) {
         try {
-            Employee person  = model.getFilteredPersonList().get(index);
+            Employee person = model.getFilteredPersonList().get(index);
             return person;
         } catch (IndexOutOfBoundsException a) {
             return null;
