@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
 
@@ -34,20 +33,8 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public HelpWindow(Stage root) {
         super(FXML, root);
-        root.initModality(Modality.NONE);
         helpContent.setText(HelpWindowContent.getFormattedHelpText());
         helpContent.positionCaret(0);
-    }
-
-    /**
-     * Creates a new HelpWindow owned by the main application window.
-     *
-     * @param root Stage to use as the root of the HelpWindow.
-     * @param owner Stage that owns the HelpWindow.
-     */
-    public HelpWindow(Stage root, Stage owner) {
-        this(root);
-        root.initOwner(owner);
     }
 
     /**
@@ -70,7 +57,6 @@ public class HelpWindow extends UiPart<Stage> {
      */
     public void show() {
         logger.fine("Showing help page about the application.");
-        HelpWindowLogic.prepareWindowForShow(getRoot()::setFullScreen, getRoot()::setMaximized);
         getRoot().show();
         getRoot().centerOnScreen();
         helpContent.positionCaret(0);
