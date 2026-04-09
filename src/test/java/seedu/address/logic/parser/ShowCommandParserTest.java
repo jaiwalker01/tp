@@ -429,4 +429,29 @@ public class ShowCommandParserTest {
         String result = (String) method.invoke(parser, "d/Finance task/report review", "task/");
         assertEquals("report review", result);
     }
+
+    @Test
+    public void parse_emptyNameField_failure() {
+        assertParseFailure(parser, "n/",
+                "Name field should not be empty.\n" + ShowCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void parse_emptyDepartmentField_failure() {
+        assertParseFailure(parser, "d/",
+                "Department field should not be empty.\n" + ShowCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void parse_emptyTaskField_failure() {
+        assertParseFailure(parser, "task/",
+                "Task field should not be empty.\n" + ShowCommand.MESSAGE_USAGE);
+    }
+
+    @Test
+    public void parse_emptyNameFieldWithOtherPrefix_failure() {
+        assertParseFailure(parser, "n/ d/Finance",
+                "Name field should not be empty.\n" + ShowCommand.MESSAGE_USAGE);
+    }
+
 }
