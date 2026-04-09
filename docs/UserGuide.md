@@ -611,7 +611,13 @@ Format: `deletetask INDEX [MORE_INDICES]...`
 
 Examples:
 * `deletetask 1` deletes the task with task index `1`.
+
+![Delete task success](images/DeleteTask.png)
+
 * `deletetask 2 4` deletes the tasks with task indices `2` and `4`.
+
+![Batch delete task success](images/BatchDeleteTask.png)
+
 * `deletetask 0` is not valid because task indices must start from `1`.
 
 <a id="clearing-all-tasks-for-an-employee"></a>
@@ -631,6 +637,9 @@ Format: `cleartasks INDEX` or `cleartasks n/EMPLOYEE_NAME`
 Examples:
 * `cleartasks 1` clears all tasks assigned to the 1st displayed employee.
 * `cleartasks n/John Doe` clears all tasks assigned to employee `John Doe`.
+
+![Clear tasks success](images/ClearTask.png)
+
 * `cleartasks 0` is not valid because employee indices must start from `1`.
 
 <a id="clearing-all-entries"></a>

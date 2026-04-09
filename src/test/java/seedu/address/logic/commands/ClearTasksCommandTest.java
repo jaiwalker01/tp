@@ -27,11 +27,13 @@ class ClearTasksCommandTest {
 
     private ModelManager model;
     private Employee employeeWithTasks;
+    private Task firstTask;
+    private Task secondTask;
 
     @BeforeEach
     void setUp() {
-        Task firstTask = new Task("Finish Homework", "Complete math homework by tomorrow", 1);
-        Task secondTask = new Task("Review PR", "Review the open pull request", 2);
+        firstTask = new Task("Finish Homework", "Complete math homework by tomorrow", 1);
+        secondTask = new Task("Review PR", "Review the open pull request", 2);
         TaskListStorage taskListStorage = new TaskListStorage(new ArrayList<>());
         taskListStorage.addTask(firstTask);
         taskListStorage.addTask(secondTask);
@@ -59,7 +61,8 @@ class ClearTasksCommandTest {
 
         CommandResult result = command.execute(model);
 
-        assertEquals(String.format(ClearTasksCommand.MESSAGE_SUCCESS, 2, "John Doe"),
+        assertEquals(String.format(ClearTasksCommand.MESSAGE_SUCCESS, "John Doe",
+                firstTask + "\n" + secondTask),
                 result.getFeedbackToUser());
         Employee updatedEmployee = model.getAddressBook().getPersonList().get(0);
         assertTrue(updatedEmployee.getTaskListStorage().getTasks().isEmpty());
@@ -71,7 +74,8 @@ class ClearTasksCommandTest {
 
         CommandResult result = command.execute(model);
 
-        assertEquals(String.format(ClearTasksCommand.MESSAGE_SUCCESS, 2, "John Doe"),
+        assertEquals(String.format(ClearTasksCommand.MESSAGE_SUCCESS, "John Doe",
+                firstTask + "\n" + secondTask),
                 result.getFeedbackToUser());
         Employee updatedEmployee = model.getAddressBook().getPersonList().get(0);
         assertTrue(updatedEmployee.getTaskListStorage().getTasks().isEmpty());

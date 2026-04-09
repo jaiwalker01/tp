@@ -2,12 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.employee.Employee;
 import seedu.address.model.employee.Name;
+import seedu.address.model.employee.Task;
 
 /**
  * Clears all tasks assigned to one employee identified by name or displayed index.
@@ -22,7 +24,8 @@ public class ClearTasksCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1\n"
             + "         " + COMMAND_WORD + " n/John Doe";
 
-    public static final String MESSAGE_SUCCESS = "Cleared %d task(s) for employee: %s";
+    public static final String MESSAGE_SUCCESS = "Deleted Tasks for %1$s:\n%2$s";
+    public static final String MESSAGE_NO_TASKS_CLEARED = "Deleted Tasks for %1$s:\nNo tasks were deleted.";
     public static final String MESSAGE_INVALID_NAME = "Invalid employee name. " + Name.MESSAGE_CONSTRAINTS;
     public static final String MESSAGE_EMPLOYEE_NOT_FOUND = "No employee named '%1$s' was found in the current list.";
     public static final String MESSAGE_DUPLICATE_EMPLOYEE_NAME =
@@ -88,9 +91,19 @@ public class ClearTasksCommand extends Command {
             }
         }
 
-        int numberOfTasksCleared = model.clearTasksForPerson(employeeToClear);
+        List<Task> tasksToClear = new ArrayList<>(employeeToClear.getTasks());
+        model.clearTasksForPerson(employeeToClear);
+
+        if (tasksToClear.isEmpty()) {
+            return new CommandResult(String.format(MESSAGE_NO_TASKS_CLEARED, employeeToClear.getName().fullName));
+        }
+
+        String deletedTasks = tasksToClear.stream()
+                .map(Task::toString)
+                .reduce((first, second) -> first + "\n" + second)
+                .orElse("");
         return new CommandResult(String.format(MESSAGE_SUCCESS,
-                numberOfTasksCleared, employeeToClear.getName().fullName));
+                employeeToClear.getName().fullName, deletedTasks));
     }
 
     private String normalizeName(String name) {
