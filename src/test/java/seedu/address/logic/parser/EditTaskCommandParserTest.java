@@ -81,12 +81,14 @@ public class EditTaskCommandParserTest {
 
     @Test
     public void parse_zeroIndex_failure() {
-        assertParseFailure(parser, "0" + TASK_NAME_PRESENTATION, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + TASK_NAME_PRESENTATION,
+                           EditTaskCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test
     public void parse_negativeIndex_failure() {
-        assertParseFailure(parser, "-1" + TASK_NAME_PRESENTATION, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-1" + TASK_NAME_PRESENTATION,
+                           EditTaskCommand.MESSAGE_INVALID_INDEX);
     }
 
     @Test

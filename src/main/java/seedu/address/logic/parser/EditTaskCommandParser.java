@@ -68,8 +68,7 @@ public class EditTaskCommandParser implements Parser<EditTaskCommand> {
         try {
             int index = Integer.parseInt(preamble.trim());
             if (index < 1) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditTaskCommand.MESSAGE_USAGE));
+                throw new ParseException(EditTaskCommand.MESSAGE_INVALID_INDEX);
             }
             return index;
         } catch (NumberFormatException e) {
