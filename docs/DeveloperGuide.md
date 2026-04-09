@@ -173,11 +173,12 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Task management
 
-ManageUp supports task assignment and maintenance through three task commands:
+ManageUp supports task assignment and maintenance through four task commands:
 
 * `addtask` adds a task to a specific employee.
 * `edittask` edits the name and/or description of an existing task by task index.
 * `deletetask` deletes a task by task index.
+* `cleartasks` removes all tasks assigned to one employee.
 
 Task management uses both per-employee storage and a global in-memory task structure:
 
@@ -254,6 +255,27 @@ The deletion flow works as follows:
 
 This design allows `deletetask` to work using a task index alone, without requiring the user to specify the employee
 who owns the task.
+
+#### Clear tasks implementation
+
+`cleartasks` is parsed by `ClearTasksCommandParser`, which accepts either an employee index or `n/NAME` before
+creating a `ClearTasksCommand`.
+
+The sequence diagram below illustrates the interactions within the clear-tasks flow for `cleartasks 1`.
+
+<puml src="diagrams/ClearTasksSequenceDiagram.puml" alt="Interactions Inside the Logic and Model Components for the `cleartasks 1` Command" />
+
+The clear-tasks flow works as follows:
+
+1. `AddressBookParser` recognises the `cleartasks` command and delegates parsing to `ClearTasksCommandParser`.
+2. `ClearTasksCommandParser` constructs a `ClearTasksCommand` using the employee index or employee name.
+3. `ClearTasksCommand` resolves the target employee from the currently displayed employee list.
+4. `ClearTasksCommand` calls `Model#clearTasksForPerson(employee)`.
+5. `ModelManager` forwards the request to `AddressBook`, together with the overall in-memory `TaskList`.
+6. `AddressBook` removes the employee's tasks from the overall `TaskList`.
+7. `AddressBook` then delegates to `UniquePersonList` to clear the same employee's personal `TaskListStorage`.
+
+This keeps the overall task mapping and the employee card in sync after all tasks for one employee are cleared.
 
 ### \[Proposed\] Undo/redo feature
 
