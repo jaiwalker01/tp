@@ -190,6 +190,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public int clearTasksForPerson(Employee employee) {
+        requireNonNull(employee);
+        return addressBook.clearTasksForPerson(employee, tasks);
+    }
+
+    @Override
     public Optional<Task> getTaskByIndex(int taskIndex) {
         return tasks.getTaskByIndex(taskIndex);
     }
