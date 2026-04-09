@@ -208,12 +208,12 @@ During execution:
 
 1. `AddressBookParser` recognises the `addtask` command and delegates parsing to `AddTaskCommandParser`.
 2. `AddTaskCommandParser` extracts the task name, task description, and employee index from the command input.
-3. A new `Task` is created with the extracted details and an assigned task index.
+3.  A new `Task` is created with the extracted details and an assigned task index.
 4. `AddTaskCommandParser` constructs an `AddTaskCommand` with the new `Task` and employee index.
 5. `AddTaskCommand` calls `Model#addTask(task, employeeIndex)`.
 6. `ModelManager` forwards the request to `AddressBook`, together with the overall in-memory `TaskList`.
 7. `AddressBook` updates the overall `TaskList` to include the new task and its owning employee.
-8. The task is also updated to the employee's own `TaskListStorage`.
+8.  The task is also updated to the employee's own `TaskListStorage`.
 
 
 This two-level update ensures that the task is both visible on the employee card and discoverable by future task
