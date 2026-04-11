@@ -554,6 +554,9 @@ Examples:
 * `addtask 1 task/Prepare Report desc/TASK_DESCRIPTION_MORE_THAN_120_CHARACTERS`
    shows the warning message because the task description exceeds the character limit.
   ![addTaskDescTooLong message](images/addtaskdesctoolong.png)
+* `addtask INVLAID_EMPLOYEE_INDEX task/Prepare Report desc/Submit by Friday`
+   shows the warning message because the employee index is invalid.
+  ![addTaskInvalidEmployeeIndex message](images/addtaskinvalidemployeeindex.png)
 
 <a id="editing-a-task"></a>
 ### Editing a task: `edittask`
