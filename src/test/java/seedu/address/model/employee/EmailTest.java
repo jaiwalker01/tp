@@ -78,6 +78,9 @@ public class EmailTest {
         // same object -> returns true
         assertTrue(email.equals(email));
 
+        // same email different case -> returns true
+        assertTrue(email.equals(new Email("Valid@Email")));
+
         // null -> returns false
         assertFalse(email.equals(null));
 
