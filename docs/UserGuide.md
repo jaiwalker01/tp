@@ -299,112 +299,100 @@ Format: `list`
 
 Shows employees that match one or more field-based filters.
 
-**Format:**  
-`show [n/NAME_KEYWORD...] [d/DEPARTMENT_KEYWORD...] [p/PHONE_KEYWORD...] [e/EMAIL_KEYWORD...] [pos/POSITION_KEYWORD...] [t/TAG_KEYWORD...] [task/TASK_KEYWORD...]`
+Format:
+```
+show [n/NAME_KEYWORD...] [d/DEPARTMENT_KEYWORD...] [p/PHONE_KEYWORD...] [e/EMAIL_KEYWORD...] [pos/POSITION_KEYWORD...] [t/TAG_KEYWORD...] [task/TASK_KEYWORD...]
+```
+* You must provide at least one filter.
+* Filters can be written in any order.
+* Different prefixes are combined using **AND**.
+* Multiple keywords after the same prefix are combined using **OR**.
+* Duplicate prefixes for the same field are not supported.
 
-##### How it works
+<box type="info" seamless>
 
-The `show` command filters the employee list using the prefixes you provide.
+**Supported prefixes:**
 
-A prefix refers to a field of an employee:
-- `n/` for name
-- `d/` for department
-- `p/` for phone
-- `e/` for email
-- `pos/` for position
-- `t/` for tag
-- `task/` for title of task
+| Prefix | Meaning |
+|--------|---------|
+| `n/` | Name |
+| `d/` | Department |
+| `p/` | Phone |
+| `e/` | Email |
+| `pos/` | Position |
+| `t/` | Tag |
+| `task/` | Task title |
 
-note: task filtering is based on title of tasks, **not** task description
+</box>
 
-You must provide **at least one** filter. If no filter is given, the command is invalid.
+<box type="info" seamless>
 
-##### Matching behaviour
+**Note:** `task/` filters by **task title only**, not task description.
 
-`show` uses **case-insensitive substring matching** for all supported fields.
+</box>
+
+<box type="info" seamless>
+
+**Matching behaviour:**
+
+All filters use **case-insensitive substring matching**.
 
 This means:
-- matching is **not case-sensitive**
-- partial keywords are allowed
-- a match is found as long as the keyword appears anywhere inside the field value
+* Matching is not case-sensitive.
+* Partial keywords are allowed.
+* A match is found as long as the keyword appears anywhere inside the field value.
 
-For example:
-- `n/al` can match `Alex`, `Sally`, or `ALAN`
-- `d/it` can match `IT`
-- `e/gmail` can match `alex@gmail.com`
-- `pos/engineer` can match `Software Engineer`
-- `t/mentor` can match a tag such as `mentor`
-- `task/report` can match a task with title such as `Prepare report`
+Examples:
+* `n/al` can match `Alex`, `Sally`, or `ALAN`
+* `d/it` can match `IT`
+* `e/gmail` can match `alex@gmail.com`
+* `pos/engineer` can match `Software Engineer`
+* `t/mentor` can match a tag such as `mentor`
+* `task/report` can match a task title such as `Prepare report`
 
-##### Different prefixes: AND behaviour
+</box>
 
-When you provide **different prefixes**, they are combined using **AND**.
+<box type="info" seamless>
 
-This means an employee must satisfy **all** of those filters to be shown.
+**Keyword behaviour:**
 
-For example:
-- `show n/Alex d/IT` shows only employees whose name contains `Alex` **and** whose department contains `IT`
-- `show d/HR pos/Manager` shows only employees whose department contains `HR` **and** whose position contains `Manager`
-- `show t/fulltime task/report` shows only employees who have a tag containing `fulltime` **and** a task containing `report`
+* Different prefixes are combined using **AND**.  
+  For example, `show n/Alex d/IT` shows employees whose name contains `Alex` **and** whose department contains `IT`.
 
-So the more different fields you add, the narrower the result becomes.
+* Multiple keywords after the same prefix are combined using **OR**.  
+  For example, `show n/John Alex` shows employees whose name contains `John` **or** `Alex`.
 
-##### Multiple keywords under the same prefix: OR behaviour
+* If both are used together, **OR** applies within a field, while **AND** applies across different fields.  
+  For example, `show n/John Alex d/IT` shows employees whose name contains `John` **or** `Alex`, **and** whose department contains `IT`.
 
-When a single prefix is followed by **multiple keywords**, those keywords are treated as **OR** within that field.
+</box>
 
-This means an employee only needs to match **one** of those keywords for that field.
+<box type="tip" seamless>
 
-For example:
-- `show n/John Alex` shows employees whose name contains `John` **or** `Alex`
-- `show d/HR Finance` shows employees whose department contains `HR` **or** `Finance`
-- `show t/mentor fulltime` shows employees who have a tag containing `mentor` **or** `fulltime`
+**Tip:** Since matching is based on substrings, shorter keywords are often enough.  
+For example, `d/Fin` may match `Finance`, and `pos/Engineer` may match `Software Engineer`.
 
-If this is combined with other prefixes, the OR logic applies within that field, while different fields are still combined using AND.
+</box>
 
-For example:
-- `show n/John Alex d/IT` shows employees whose name contains `John` **or** `Alex`, **and** whose department contains `IT`
-- `show t/mentor fulltime task/report` shows employees who have a tag containing `mentor` **or** `fulltime`, **and** a task containing `report`
+#### Examples
 
-##### Order of filters
+* `show d/IT` – shows employees whose department contains `IT`.
+* `show n/Alex pos/Manager` – shows employees whose name contains `Alex` and whose position contains `Manager`.
+* `show pos/Manager d/HR` – shows employees whose position contains `Manager` and whose department contains `HR`.
+* `show n/John Alex d/IT` – shows employees whose name contains `John` or `Alex`, and whose department contains `IT`.
+* `show t/intern task/report` – shows employees with a tag containing `intern` and a task title containing `report`.
 
-Filters can be written in **any order**.
+After entering a valid `show` command, ManageUp updates the displayed employee list to show only the employees matching the given filters.
 
-For example, the following commands are treated the same:
-- `show n/Alex d/IT`
-- `show d/IT n/Alex`
+<box type="info" seamless>
 
-##### Supported keyword format
+**Expected output:**  
+The employee list is filtered according to the prefixes and keywords provided.
 
-Each prefix can be followed by **one or more keywords**.
+</box>
 
-Each keyword is matched separately using substring matching.
-
-For example:
-- `show n/John Alex` checks whether the employee’s name contains `John` or `Alex`
-- `show pos/Engineer Manager` checks whether the employee’s position contains `Engineer` or `Manager`
-
-Since matching is based on substrings, shorter keywords are often enough.
-
-For example:
-- `show pos/Engineer` may already match `Software Engineer`
-- `show d/Fin` may match `Finance`
-- `show task/report` may match `Prepare report`
-- `show t/lead` may match `teamlead`
-
-#### Other Examples
-
-- `show n/Alex pos/Manager`  
-  Shows employees whose name contains `Alex` **and** whose position contains `Manager`.
-
-- `show pos/Manager d/HR`  
-  Shows employees whose position contains `Manager` **and** whose department contains `HR`.
-
-- `show n/John Alex d/IT`  
-  Shows employees whose name contains `John` **or** `Alex`, and whose department contains `IT`.
-
-- `show t/intern task/report`  
-  Shows employees with a tag containing `intern` **and** a task containing `report`.
+#### Errors
+Facing errors? See [Troubleshooting `show`](#troubleshooting-show).
 
 <a id="editing-an-employee"></a>
 ### Editing an employee: `edit`
@@ -853,7 +841,7 @@ There is no need to save manually.
 <a id="editing-the-data-file"></a>
 ### Editing the data file
 
-ManageUp data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`.
+ManageUp data are saved automatically as a JSON file `[JAR file location]/data/manageup.json`.
 Advanced users are welcome to update data directly by editing that data file.
 
 **Caution:**
