@@ -313,7 +313,9 @@ A prefix refers to a field of an employee:
 - `e/` for email
 - `pos/` for position
 - `t/` for tag
-- `task/` for task
+- `task/` for title of task
+
+note: task filtering is based on title of tasks, **not** task description
 
 You must provide **at least one** filter. If no filter is given, the command is invalid.
 
@@ -332,7 +334,7 @@ For example:
 - `e/gmail` can match `alex@gmail.com`
 - `pos/engineer` can match `Software Engineer`
 - `t/mentor` can match a tag such as `mentor`
-- `task/report` can match a task such as `Prepare report`
+- `task/report` can match a task with title such as `Prepare report`
 
 ##### Different prefixes: AND behaviour
 
@@ -390,36 +392,7 @@ For example:
 - `show task/report` may match `Prepare report`
 - `show t/lead` may match `teamlead`
 
-##### Notes
-- At least one filter must be provided.
-- Filters are case-insensitive.
-- All matching is based on substring containment.
-- Different prefixes are combined using **AND**.
-- Multiple keywords under the same prefix are treated as **OR**.
-- Filters can be written in any order.
-
-#### Examples
-
-- `show e/gmail`  
-  Shows employees whose email contains `gmail`.
-
-- `show pos/Engineer`  
-  Shows employees whose position contains `Engineer`, such as `Software Engineer`.
-
-- `show t/mentor`  
-  Shows employees with a tag containing `mentor`.
-
-- `show task/report`  
-  Shows employees with a task containing `report`.
-
-- `show n/John Alex`  
-  Shows employees whose name contains `John` **or** `Alex`.
-
-- `show d/HR Finance`  
-  Shows employees whose department contains `HR` **or** `Finance`.
-
-- `show t/mentor fulltime`  
-  Shows employees with a tag containing `mentor` **or** `fulltime`.
+#### Other Examples
 
 - `show n/Alex pos/Manager`  
   Shows employees whose name contains `Alex` **and** whose position contains `Manager`.
@@ -909,19 +882,19 @@ _More features coming soon ..._
 
 ## Command summary
 
-| Action                                | Command         | Format                                                                                                                                                             |
-|---------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Add an employee to contacts           | **Add**         | `add n/NAME p/PHONE e/EMAIL d/DEPARTMENT pos/POSITION [t/TAG]...`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com d/Finance pos/Analyst t/fulltime`     |
-| Delete an employee from contacts      | **Delete**      | `delete NAME` or `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete James Ho`, `delete 3`, `delete 1 3 5`                                                          |
-| Edit an employee's details            | **Edit**        | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/DEPARTMENT] [pos/POSITION] [t/TAG]...`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                           |
-| List all employees in contacts        | **List**        | `list`                                                                                                                                                             |
-| Show filtered employees from contacts | **Show**        | `show [n/NAME] [d/DEPARTMENT] [p/PHONE] [e/EMAIL] [pos/POSITION] [t/TAG] [task/TASK]...` <br> e.g., `show n/Ja d/Finance pos/Developer HR Management t/Nightshift` |
-| Delete ALL employees from contacts    | **Clear**       | `clear`                                                                                                                                                            |
-| Add tasks to an employee              | **Add Task**    | `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION`<br> e.g., `addtask 1 task/Prepare Slides desc/Send by Friday`                                        |
-| Edit a task                           | **Edit Task**   | `edittask TASK_INDEX [task/TASK_NAME] [desc/TASK_DESCRIPTION]`<br> e.g., `edittask 6 task/Close deal desc/Finalise by Wednesday`                                   |
-| Delete a task                         | **Delete Task** | `deletetask TASK_INDEX [MORE_TASK_INDEXES]...`<br> e.g., `deletetask 1`, `deletetask 1 3`                                                                          |
-| Clear all tasks for one employee      | **Clear Tasks** | `cleartasks INDEX` or `cleartasks n/EMPLOYEE_NAME`<br> e.g., `cleartasks 1`, `cleartasks n/James Ho`                                                               |
-| Display help message                  | **Help**        | `help`                                                                                                                                                             |
+| Action                                | Command         | Format                                                                                                                                                                               |
+|---------------------------------------|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Add an employee to contacts           | **Add**         | `add n/NAME p/PHONE e/EMAIL d/DEPARTMENT pos/POSITION [t/TAG]...`<br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com d/Finance pos/Analyst t/fulltime`                       |
+| Delete an employee from contacts      | **Delete**      | `delete NAME` or `delete INDEX [MORE_INDEXES]...`<br> e.g., `delete James Ho`, `delete 3`, `delete 1 3 5`                                                                            |
+| Edit an employee's details            | **Edit**        | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/DEPARTMENT] [pos/POSITION] [t/TAG]...`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`                                             |
+| List all employees in contacts        | **List**        | `list`                                                                                                                                                                               |
+| Show filtered employees from contacts | **Show**        | `show [n/NAME]... [d/DEPARTMENT...] [p/PHONE...] [e/EMAIL...] [pos/POSITION...] [t/TAG...] [task/TASK...]` <br> e.g., `show n/Ja d/Finance pos/Developer HR Management t/Nightshift` |
+| Delete ALL employees from contacts    | **Clear**       | `clear`                                                                                                                                                                              |
+| Add tasks to an employee              | **Add Task**    | `addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION`<br> e.g., `addtask 1 task/Prepare Slides desc/Send by Friday`                                                          |
+| Edit a task                           | **Edit Task**   | `edittask TASK_INDEX [task/TASK_NAME] [desc/TASK_DESCRIPTION]`<br> e.g., `edittask 6 task/Close deal desc/Finalise by Wednesday`                                                     |
+| Delete a task                         | **Delete Task** | `deletetask TASK_INDEX [MORE_TASK_INDEXES]...`<br> e.g., `deletetask 1`, `deletetask 1 3`                                                                                            |
+| Clear all tasks for one employee      | **Clear Tasks** | `cleartasks INDEX` or `cleartasks n/EMPLOYEE_NAME`<br> e.g., `cleartasks 1`, `cleartasks n/James Ho`                                                                                 |
+| Display help message                  | **Help**        | `help`                                                                                                                                                                               |
 
 
 ## Troubleshooting
