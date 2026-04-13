@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 import seedu.address.logic.commands.ShowCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.employee.Employee;
+import seedu.address.model.employee.Name;
 import seedu.address.model.employee.predicatechecker.DepartmentContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.EmailContainsKeywordsPredicate;
 import seedu.address.model.employee.predicatechecker.NameContainsKeywordsPredicate;
@@ -47,6 +48,7 @@ public class ShowCommandParser implements Parser<ShowCommand> {
             if (value.isEmpty()) {
                 throw createEmptyFieldException("Name");
             }
+            validateNameValue(value);
             predicate = predicate.and(
                     new NameContainsKeywordsPredicate(Arrays.asList(value.split("\\s+")))
             );
@@ -164,6 +166,17 @@ public class ShowCommandParser implements Parser<ShowCommand> {
 
         assert start <= end : "Extraction start index should not exceed end index";
         return input.substring(start, end).trim();
+    }
+
+    /**
+     * Validates the name value used in the show command.
+     */
+    private void validateNameValue(String value) throws ParseException {
+        assert value != null : "Name value should not be null";
+
+        if (!Name.isValidName(value)) {
+            throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+        }
     }
 
     /**
