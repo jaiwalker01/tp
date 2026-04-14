@@ -5,7 +5,7 @@
 
 # ManageUp User Guide
 
-Sick of spreadsheets, scattered documents and switching between multiple tools? 
+Sick of spreadsheets, scattered documents and switching between multiple tools?
 
 ManageUp is an **employee and task management application** designed for **managers overseeing multiple teams or departments**. It is
 optimised for use via a **Command Line Interface (CLI)**, while still providing the benefits of a
@@ -92,7 +92,7 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
    | **Mac**           | Install the **exact JDK version** prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html). |
    | **Linux**         | Follow the installation guide [here](https://se-education.org/guides/tutorials/javaInstallationLinux.html)               |
 
-2. Download the latest `ManageUp.jar` from the ManageUp Github [releases page](https://github.com/AY2526S2-CS2103T-T14-1/tp/releases). 
+2. Download the latest `ManageUp.jar` from the ManageUp Github [releases page](https://github.com/AY2526S2-CS2103T-T14-1/tp/releases).
 
 3. Save the file to the folder you want to use as the _home folder_ for ManageUp.
 
@@ -107,7 +107,7 @@ New to ManageUp? Start with [Quick Start](#quick-start). Already installed? Jump
 
    Replace `Downloads` with the name of your chosen folder if different.
 
-5. ManageUp opens with sample data, as shown below. 
+5. ManageUp opens with sample data, as shown below.
 
    ![Ui](images/QuickStart_ManageUpOpenScene.png)
 
@@ -309,7 +309,7 @@ edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [d/DEPARTMENT] [pos/POSITION] [t/TAG]...
 
 <box type="warning" seamless>
 
-**Warning:** Editing an employee to have the same name and the same phone number or email address as an existing employee is not allowed and will be rejected. 
+**Warning:** Editing an employee to have the same name and the same phone number or email address as an existing employee is not allowed and will be rejected.
 
 </box>
 
@@ -447,7 +447,7 @@ Facing errors? See [Troubleshooting `delete`](#troubleshooting-delete).
 
 Adds a task to a specific employee identified by employee index.
 
-Format: 
+Format:
 ```
 addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION
 ```
@@ -486,9 +486,9 @@ addtask EMPLOYEE_INDEX task/TASK_NAME desc/TASK_DESCRIPTION
 
 
 #### Examples
-* `addtask 2 task/Prepare Report desc/Submit by Friday` 
+* `addtask 2 task/Prepare Report desc/Submit by Friday`
    adds a task named `Prepare Report` with description `Submit by Friday` to employee at index 2.
-* `addtask 2 task/Client Followup desc/Call client before Monday` 
+* `addtask 2 task/Client Followup desc/Call client before Monday`
    adds a task named `Client Followup` with description `Call client before Monday` to employee at index 2.
 
 <box type="info" seamless>
@@ -768,20 +768,20 @@ Examples:
 
 **Keyword behaviour:**
 
-* Different prefixes are combined using **AND**.  
+* Different prefixes are combined using **AND**.
   For example, `show n/Alex d/IT` shows employees whose name contains `Alex` **and** whose department contains `IT`.
 
-* Multiple keywords after the same prefix are combined using **OR**.  
+* Multiple keywords after the same prefix are combined using **OR**.
   For example, `show n/John Alex` shows employees whose name contains `John` **or** `Alex`.
 
-* If both are used together, **OR** applies within a field, while **AND** applies across different fields.  
+* If both are used together, **OR** applies within a field, while **AND** applies across different fields.
   For example, `show n/John Alex d/IT` shows employees whose name contains `John` **or** `Alex`, **and** whose department contains `IT`.
 
 </box>
 
 <box type="tip" seamless>
 
-**Tip:** Since matching is based on substrings, shorter keywords are often enough.  
+**Tip:** Since matching is based on substrings, shorter keywords are often enough.
 For example, `d/Fin` may match `Finance`, and `pos/Engineer` may match `Software Engineer`.
 
 </box>
