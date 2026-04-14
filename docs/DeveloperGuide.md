@@ -793,9 +793,23 @@ The following activity diagram summarizes what happens when a user executes a ne
 This proposal prioritizes implementation simplicity. If the team decides to build undo/redo in future, the main tradeoff
 to revisit is whether full-state snapshots remain acceptable as the amount of employee and task data grows.
 
+### Advanced error handling for duplicate prefixes
 
+Currently, if a user enters a command with duplicate prefixes (e.g. `addtask task/Prepare Report task/Submit by Friday desc/Some description`),
+the app will output an error message indicating an invalid command format. However, this error capturing is possible if the duplicate prefixes have spacing
+between them. For example, `addtask task/Prepare Reporttask/Submit by Friday desc/Some description` will not trigger the duplicate prefix error message, and instead will be parsed as a valid command with task name `Prepare Reporttask/Submit by Friday` and task description `Some description`.
 
+#### Proposed Implementation
+Implement more robust duplicate prefix detection that can identify duplicate prefixes even when they are adjacent without spacing. 
+This would involve modifying the command parsers to check for duplicate prefixes in a more comprehensive way, such as by maintaining a set of seen prefixes during parsing and checking for duplicates regardless of spacing.
 
+### Allowance of special characters in employee names
+
+Currently, employee names are restricted to alphanumeric characters and spaces. This means that names with special characters (e.g. `John Doe-Smith`, `O'Connor`, `李华`, `s/o`, `d/o`) are not accepted by the app.
+
+#### Proposed Implementation
+Validation rules for names could be relaxed further in future iterations to accommodate for such cases of employee names with special characters.
+This would involve modifying the `isValidName` method in the `Employee` class to allow for a wider range of characters, while still ensuring that the name is not blank and does not contain only whitespace.
 
 ## **Appendix: Instructions for manual testing**
 
