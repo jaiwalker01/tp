@@ -420,42 +420,42 @@ This keeps the overall task mapping and the employee card in sync after all task
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​ | I want to …​ | So that I can…​ |
-|----------|--------|--------------|----------------|
-| `* * *` | new user | see usage instructions | refer to instructions when I forget how to use the app |
-| `* * *` | first-time user | see examples of valid command formats | avoid input errors |
-| `* * *` | user | view all my employees | have an overall view of all employees under my management |
-| `* * *` | user | view all tasks assigned | understand the current workload of the company |
-| `* * *` | user | see my employees' details | quickly access key information to contact them or assign work |
-| `* * *` | user | add employee's department | understand where they belong in the organisation and route requests correctly |
-| `* * *` | user | add employee's task | assign tasks to specific employees |
-| `* * *` | user | delete employees | remove outdated records when someone leaves |
-| `* * *` | user | search for an employee using name | find the right person quickly without scrolling through the entire list |
-| `* * *` | user | search for an employee using department | find employees within a specific department quickly |
-| `* * *` | user | search for an employee using job title | locate the appropriate employee for a specific role |
-| `* * *` | administrative user | find employee assigned to task | contact the responsible employee for follow-ups |
-| `* *` | user | add employee's address | arrange deliveries, site visits, or confirm work locations |
-| `* *` | user | add employee's contact number | call or text employees for urgent coordination |
-| `* *` | user | add employee's email | email employees directly regarding tasks and updates |
-| `* *` | user | add employee's job title | assign appropriate tasks based on their role |
-| `* *` | forgetful user | add employee's profile picture | recognise employees quickly |
-| `* *` | user | add employee's task description | include more details for easier future reference |
-| `* *` | user with many employees | add notes or facts to an employee's details | remember conversations or important information |
-| `* *` | user | edit employee's details | update information when promotions or role changes occur |
-| `* *` | user | edit task description | ensure task details remain accurate |
+| Priority | As a …​                        | I want to …​ | So that I can…​ |
+|----------|--------------------------------|--------------|----------------|
+| `* * *` | new user                       | see usage instructions | refer to instructions when I forget how to use the app |
+| `* * *` | new user                       | see examples of valid command formats | avoid input errors |
+| `* * *` | user                           | view all my employees | have an overall view of all employees under my management |
+| `* * *` | user                           | view all tasks assigned | understand the current workload of the company |
+| `* * *` | user                           | see my employees' details | quickly access key information to contact them or assign work |
+| `* * *` | user                           | add employee's department | understand where they belong in the organisation and route requests correctly |
+| `* * *` | user                           | add employee's task | assign tasks to specific employees |
+| `* * *` | user                           | delete employees | remove outdated records when someone leaves |
+| `* * *` | user                           | search for an employee using name | find the right person quickly without scrolling through the entire list |
+| `* * *` | user                           | search for an employee using department | find employees within a specific department quickly |
+| `* * *` | user                           | search for an employee using job title | locate the appropriate employee for a specific role |
+| `* * *` | administrative user            | find employee assigned to task | contact the responsible employee for follow-ups |
+| `* *` | user                           | add employee's address | arrange deliveries, site visits, or confirm work locations |
+| `* *` | user                           | add employee's contact number | call or text employees for urgent coordination |
+| `* *` | user                           | add employee's email | email employees directly regarding tasks and updates |
+| `* *` | user                           | add employee's job title | assign appropriate tasks based on their role |
+| `* *` | forgetful user                 | add employee's profile picture | recognise employees quickly |
+| `* *` | user                           | add employee's task description | include more details for easier future reference |
+| `* *` | user with many employees       | add notes or facts to an employee's details | remember conversations or important information |
+| `* *` | user                           | edit employee's details | update information when promotions or role changes occur |
+| `* *` | user                           | edit task description | ensure task details remain accurate |
 | `* *` | user handling many departments | filter employees by department | quickly find employees in a particular sector |
-| `* *` | user | search employees working on a specific task | identify people responsible for that task |
-| `* *` | user | search tasks by keywords | quickly locate tasks already assigned |
-| `* *` | user | see all tasks assigned to a department | allocate work more evenly across departments |
-| `* *` | user | sort tasks based on deadlines | identify overdue or upcoming tasks |
-| `*` | busy user | batch delete assigned tasks | update records more efficiently |
-| `*` | busy user | batch delete employees | remove multiple outdated records quickly |
-| `*` | user | sort employees by number of tasks assigned | see who currently has the heaviest workload |
-| `*` | frequent user | see command autocomplete suggestions | execute commands more quickly |
-| `*` | frequent user | see autocomplete suggestions with existing names or job titles | avoid duplicate or inconsistent entries |
-| `*` | frequent user | use shortcuts for commands | save time typing full commands |
-| `*` | first-time user | see sample employees when opening the app | understand how the application works |
-| `*` | user | undo my last action | correct mistakes quickly |
+| `* *` | user                           | search employees working on a specific task | identify people responsible for that task |
+| `* *` | user                           | search tasks by keywords | quickly locate tasks already assigned |
+| `* *` | user                           | see all tasks assigned to a department | allocate work more evenly across departments |
+| `* *` | user                           | sort tasks based on deadlines | identify overdue or upcoming tasks |
+| `*` | busy user                      | batch delete assigned tasks | update records more efficiently |
+| `*` | busy user                      | batch delete employees | remove multiple outdated records quickly |
+| `*` | user                           | sort employees by number of tasks assigned | see who currently has the heaviest workload |
+| `*` | frequent user                  | see command autocomplete suggestions | execute commands more quickly |
+| `*` | frequent user                  | see autocomplete suggestions with existing names or job titles | avoid duplicate or inconsistent entries |
+| `*` | frequent user                  | use shortcuts for commands | save time typing full commands |
+| `*` | new user                       | see sample employees when opening the app | understand how the application works |
+| `*` | user                           | undo my last action | correct mistakes quickly |
 
 
 ### Use cases
@@ -690,7 +690,7 @@ Use case ends.
 --------------------------------------------------------------------------------------------------------------------
 ## **Appendix: Planned Enhancements**
 
-Given below are some planned enhancements that the team may implement in future iterations.
+Given below is a planned enhancement that the team may implement in future iterations.
 
 ### Undo/redo feature
 
