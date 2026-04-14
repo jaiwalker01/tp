@@ -25,9 +25,9 @@ public class DeleteCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes one or more employees identified by name or index.\n"
             + "Parameters: NAME or INDEX [MORE_INDEXES]...\n"
-            + "Examples: " + COMMAND_WORD + " John Doe\n"
-            + "          " + COMMAND_WORD + " 2\n"
-            + "          " + COMMAND_WORD + " 1 3 5";
+            + "Examples: " + COMMAND_WORD + " John Doe, "
+            + COMMAND_WORD + " 2, "
+            + COMMAND_WORD + " 1 3 5";
 
     public static final String MESSAGE_DELETE_EMPLOYEE_SUCCESS = "Employee deleted successfully:\n%1$s";
     public static final String MESSAGE_DELETE_EMPLOYEES_SUCCESS = "Employees deleted successfully:\n%1$s";

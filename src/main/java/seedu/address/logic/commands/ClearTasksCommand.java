@@ -21,8 +21,8 @@ public class ClearTasksCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clears all tasks belonging to the employee identified by their name or index.\n"
             + "Parameters: INDEX or n/NAME\n"
-            + "Example: " + COMMAND_WORD + " 1\n"
-            + "         " + COMMAND_WORD + " n/John Doe";
+            + "Examples: " + COMMAND_WORD + " 1, "
+            + COMMAND_WORD + " n/John Doe";
 
     public static final String MESSAGE_SUCCESS = "Deleted Tasks for %1$s:\n%2$s";
     public static final String MESSAGE_NO_TASKS_CLEARED = "Deleted Tasks for %1$s:\nNo tasks were deleted.";

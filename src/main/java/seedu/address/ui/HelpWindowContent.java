@@ -42,7 +42,7 @@ public final class HelpWindowContent {
                         "INDEX [MORE_INDICES]...", List.of("deletetask 1", "deletetask 1 3 5")),
                 new HelpSection("cleartasks", "Clears all tasks assigned to one employee.",
                         "INDEX or n/NAME", List.of("cleartasks 1", "cleartasks n/John Doe")),
-                new HelpSection("clear", "Clears all employees from the address book.",
+                new HelpSection("clear", "Clears all employees from ManageUp.",
                         "No additional parameters.", List.of("clear")),
                 new HelpSection("exit", "Exits ManageUp.",
                         "No additional parameters.", List.of("exit"))
